@@ -3,7 +3,7 @@
   "horse.tooltip.health.unit": "%s颗心",
   "horse.tooltip.jump_height": "跳跃高度：%s",
   "horse.tooltip.jump_height.unit": "%s格",
-  "horse.tooltip.max": "最高：%s",
+  "horse.tooltip.max": "最大：%s",
   "horse.tooltip.min": "最低：%s",
   "horse.tooltip.speed": "速度：%s",
   "horse.tooltip.speed.unit": "%s格/秒",
