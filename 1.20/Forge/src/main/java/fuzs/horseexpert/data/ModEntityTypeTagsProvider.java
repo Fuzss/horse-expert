@@ -6,13 +6,14 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModEntityTypeTagsProvider extends AbstractTagProvider.EntityTypes {
 
-    public ModEntityTypeTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, ExistingFileHelper fileHelper) {
-        super(packOutput, lookupProvider, modId, fileHelper);
+    public ModEntityTypeTagsProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override

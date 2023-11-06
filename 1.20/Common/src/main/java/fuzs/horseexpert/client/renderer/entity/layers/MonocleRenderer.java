@@ -21,17 +21,17 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Function;
 
 public class MonocleRenderer {
-    private static final ResourceLocation MONOCLE_LOCATION = new ResourceLocation(HorseExpert.MOD_ID, "textures/entity/monocle.png");
+    private static final ResourceLocation MONOCLE_LOCATION = HorseExpert.id("textures/models/armor/monocle_layer_1.png");
     private static final ModelLayerFactory LAYER_REGISTRY = ModelLayerFactory.from(HorseExpert.MOD_ID);
-    public static final ModelLayerLocation PLAYER_MONOCLE = LAYER_REGISTRY.register("player", "monocle");
+    public static final ModelLayerLocation PLAYER_MONOCLE_LAYER = LAYER_REGISTRY.register("player", "monocle");
 
     private static MonocleRenderer instance;
 
-    private final HumanoidModel<LivingEntity> monocleModel;
+    private final HumanoidModel<LivingEntity> model;
 
     private MonocleRenderer(EntityModelSet entityModels) {
         // nice trick from artifacts mod for overriding those two methods and therefore being able to use the vanilla class
-        this.monocleModel = new HumanoidModel<>(entityModels.bakeLayer(PLAYER_MONOCLE)) {
+        this.model = new HumanoidModel<>(entityModels.bakeLayer(PLAYER_MONOCLE_LAYER)) {
 
             @Override
             protected Iterable<ModelPart> headParts() {
@@ -47,9 +47,9 @@ public class MonocleRenderer {
 
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity> void render(ItemStack stack, PoseStack matrixStack, EntityModel<? extends LivingEntity> entityModel, MultiBufferSource multiBufferSource, int light, Function<ResourceLocation, RenderType> renderType) {
-        ((HumanoidModel<T>) entityModel).copyPropertiesTo((HumanoidModel<T>) this.monocleModel);
+        ((HumanoidModel<T>) entityModel).copyPropertiesTo((HumanoidModel<T>) this.model);
         VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, renderType.apply(MONOCLE_LOCATION), false, stack.hasFoil());
-        this.monocleModel.renderToBuffer(matrixStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.renderToBuffer(matrixStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     public static MonocleRenderer get() {

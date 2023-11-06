@@ -1,14 +1,15 @@
-package fuzs.horseexpert.data;
+package fuzs.horseexpert.data.client;
 
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.puzzleslib.api.data.v1.AbstractModelProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 public class ModModelProvider extends AbstractModelProvider {
 
-    public ModModelProvider(PackOutput packOutput, String modId, ExistingFileHelper fileHelper) {
-        super(packOutput, modId, fileHelper);
+    public ModModelProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override

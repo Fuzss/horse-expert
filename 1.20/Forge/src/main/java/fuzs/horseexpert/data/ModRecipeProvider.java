@@ -8,13 +8,14 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends AbstractRecipeProvider {
 
-    public ModRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public ModRecipeProvider(GatherDataEvent evt, String modId) {
+        super(evt, modId);
     }
 
     @Override

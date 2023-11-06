@@ -39,7 +39,7 @@ public class AttributeOverlayHandler {
     private static Optional<LivingEntity> isRenderingTooltipsAllowed(Minecraft minecraft) {
         if (minecraft.options.hideGui) return Optional.empty();
         if (minecraft.options.getCameraType().isFirstPerson() && minecraft.crosshairPickEntity instanceof LivingEntity entity && minecraft.crosshairPickEntity.getType().is(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)) {
-            if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR && minecraft.cameraEntity instanceof Player player && CommonAbstractions.INSTANCE.findEquippedItem(player, ModRegistry.MONOCLE_ITEM.get()).isPresent() && (!HorseExpert.CONFIG.get(ClientConfig.class).requiresSneaking || player.isShiftKeyDown())) {
+            if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR && minecraft.cameraEntity instanceof Player player && CommonAbstractions.INSTANCE.findEquippedItem(player, ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG).isPresent() && (!HorseExpert.CONFIG.get(ClientConfig.class).requiresSneaking || player.isShiftKeyDown())) {
                 if (player.getVehicle() != entity && (!(entity instanceof AbstractHorse abstractHorse) || !HorseExpert.CONFIG.get(ClientConfig.class).mustBeTamed || abstractHorse.isTamed())) {
                     return Optional.of(entity);
                 }

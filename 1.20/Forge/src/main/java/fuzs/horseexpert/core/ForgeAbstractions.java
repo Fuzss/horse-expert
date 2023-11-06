@@ -1,5 +1,7 @@
 package fuzs.horseexpert.core;
 
+import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +13,12 @@ import java.util.Optional;
 public class ForgeAbstractions implements CommonAbstractions {
 
     @Override
-    public Optional<ItemStack> findEquippedItem(LivingEntity entity, Item item) {
-        return CuriosApi.getCuriosHelper().findFirstCurio(entity, item).map(SlotResult::stack);
+    public Optional<ItemStack> findEquippedItem(LivingEntity entity, TagKey<Item> tagKey) {
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("curios")) {
+            return CuriosApi.getCuriosHelper().findFirstCurio(entity, itemStack -> itemStack.is(tagKey)).map(SlotResult::stack)
+                    .or(() -> CommonAbstractions.super.findEquippedItem(entity, tagKey));
+        } else {
+            return CommonAbstractions.super.findEquippedItem(entity, tagKey);
+        }
     }
 }

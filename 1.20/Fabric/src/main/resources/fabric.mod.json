@@ -37,8 +37,11 @@
     "fabricloader": ">=${minFabricVersion}",
     "fabric-api": ">=${minFabricApiVersion}",
     "puzzleslib": ">=${minPuzzlesVersion}",
-    "trinkets": "*",
     "minecraft": "${minecraftVersion}",
     "java": ">=17"
+  },
+
+  "recommends": {
+    "trinkets": "*"
   }
 }
