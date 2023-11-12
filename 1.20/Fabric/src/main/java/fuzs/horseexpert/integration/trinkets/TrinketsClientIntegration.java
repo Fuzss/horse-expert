@@ -15,7 +15,7 @@ public class TrinketsClientIntegration {
 
     public static void registerTrinketsRenderer() {
         TrinketRendererRegistry.registerRenderer(ModRegistry.MONOCLE_ITEM.get(), (ItemStack itemStack, SlotReference slotReference, EntityModel<? extends LivingEntity> entityModel, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, LivingEntity livingEntity, float v, float v1, float v2, float v3, float v4, float v5) -> {
-            MonocleRenderer.get().render(itemStack, poseStack, entityModel, multiBufferSource, i, ModRenderTypes::armorCutoutNoCull);
+            MonocleRenderer.get().render(itemStack, poseStack, entityModel, multiBufferSource, i, ModRenderTypes::armorCutoutTranslucentNoCull);
         });
     }
 }

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog].
 
+## [v8.1.1-1.20.1] - 2023-11-12
+### Fixed
+- Fixed monocle glass transparency on Fabric
+
 ## [v8.1.0-1.20.1] - 2023-11-06
 ### Changed
 - Both Curios Api and Trinkets are now optional, if none is installed the monocle can be equipped in the helmet armor slot
