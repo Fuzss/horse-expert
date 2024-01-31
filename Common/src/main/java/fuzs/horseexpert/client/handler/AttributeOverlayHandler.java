@@ -8,7 +8,7 @@ import fuzs.horseexpert.config.ClientConfig;
 import fuzs.horseexpert.core.CommonAbstractions;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
-import fuzs.puzzleslib.api.client.screen.v2.TooltipRenderHelper;
+import fuzs.puzzleslib.api.client.gui.v2.components.TooltipRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

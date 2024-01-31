@@ -25,7 +25,7 @@ public class HorseExpert implements ModConstructor {
     @Override
     public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsContext context) {
         context.registerBuildListener(CreativeModeTabs.TOOLS_AND_UTILITIES, (itemDisplayParameters, output) -> {
-            output.accept(ModRegistry.MONOCLE_ITEM.get());
+            output.accept(ModRegistry.MONOCLE_ITEM.value());
         });
     }
 
