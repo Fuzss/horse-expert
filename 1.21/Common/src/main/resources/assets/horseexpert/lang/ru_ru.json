@@ -1,0 +1,14 @@
+{
+  "horse.tooltip.health": "Здоровье: %s",
+  "horse.tooltip.health.unit": "%s сердец",
+  "horse.tooltip.jump_height": "Высота прыжка: %s",
+  "horse.tooltip.jump_height.unit": "%s блоков",
+  "horse.tooltip.max": "Максимум: %s",
+  "horse.tooltip.min": "Минимум: %s",
+  "horse.tooltip.speed": "Скорость: %s",
+  "horse.tooltip.speed.unit": "%s блоков/сек",
+  "horse.tooltip.strength": "Хранилище: %s",
+  "horse.tooltip.strength.unit": "%s слотов",
+  "item.horseexpert.monocle": "Монокль",
+  "item.horseexpert.monocle.tooltip": "Наденьте это и посмотрите на лошадь или ламу, чтобы увидеть характеристики"
+}
