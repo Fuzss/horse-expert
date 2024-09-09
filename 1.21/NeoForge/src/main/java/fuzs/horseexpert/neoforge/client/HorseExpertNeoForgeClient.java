@@ -2,29 +2,34 @@ package fuzs.horseexpert.neoforge.client;
 
 import fuzs.horseexpert.HorseExpert;
 import fuzs.horseexpert.client.HorseExpertClient;
+import fuzs.horseexpert.data.client.ModLanguageProvider;
+import fuzs.horseexpert.data.client.ModModelProvider;
 import fuzs.horseexpert.neoforge.integration.curios.CuriosClientIntegration;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
+import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 
-@Mod.EventBusSubscriber(modid = HorseExpert.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod(value = HorseExpert.MOD_ID, dist = Dist.CLIENT)
 public class HorseExpertNeoForgeClient {
 
-    @SubscribeEvent
-    public static void onConstructMod(final FMLConstructModEvent evt) {
+    public HorseExpertNeoForgeClient(ModContainer modContainer) {
         ClientModConstructor.construct(HorseExpert.MOD_ID, HorseExpertClient::new);
+        registerLoadingEvents(modContainer.getEventBus());
+        DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID, ModLanguageProvider::new, ModModelProvider::new);
     }
 
-    @SubscribeEvent
-    public static void onClientSetup(final FMLClientSetupEvent evt) {
-        registerIntegrations();
+    private static void registerLoadingEvents(IEventBus eventBus) {
+        eventBus.addListener((final FMLClientSetupEvent evt) -> {
+            registerModIntegrations();
+        });
     }
 
-    private static void registerIntegrations() {
+    private static void registerModIntegrations() {
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("curios")) {
             CuriosClientIntegration.registerCuriosRenderer();
         }

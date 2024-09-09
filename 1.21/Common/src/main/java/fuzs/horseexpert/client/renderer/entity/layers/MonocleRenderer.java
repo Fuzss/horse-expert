@@ -48,8 +48,8 @@ public class MonocleRenderer {
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity> void render(ItemStack stack, PoseStack matrixStack, EntityModel<? extends LivingEntity> entityModel, MultiBufferSource multiBufferSource, int light, Function<ResourceLocation, RenderType> renderType) {
         ((HumanoidModel<T>) entityModel).copyPropertiesTo((HumanoidModel<T>) this.model);
-        VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, renderType.apply(MONOCLE_LOCATION), false, stack.hasFoil());
-        this.model.renderToBuffer(matrixStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(multiBufferSource, renderType.apply(MONOCLE_LOCATION), stack.hasFoil());
+        this.model.renderToBuffer(matrixStack, vertexconsumer, light, OverlayTexture.NO_OVERLAY);
     }
 
     public static MonocleRenderer get() {

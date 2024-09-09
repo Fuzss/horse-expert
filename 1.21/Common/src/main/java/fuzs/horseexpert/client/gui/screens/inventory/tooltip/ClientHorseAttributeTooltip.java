@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
-public record ClientHorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect icon, Component line1, @Nullable Component line2) implements ClientTooltipComponent {
+public record ClientHorseAttributeTooltip(@Nullable Item item, @Nullable Holder<MobEffect> icon, Component line1, @Nullable Component line2) implements ClientTooltipComponent {
    private static final int TEXT_INDENT = 4;
    private static final int ICON_SIZE = 20;
    // this is needed since we need to always supply an empty text component above this on the tooltip, but we actually want to move up where the empty component would normally be

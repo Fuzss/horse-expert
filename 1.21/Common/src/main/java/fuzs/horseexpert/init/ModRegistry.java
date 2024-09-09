@@ -6,15 +6,18 @@ import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.api.init.v3.tags.BoundTagFactory;
 import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public class ModRegistry {
-    static final RegistryManager REGISTRY = RegistryManager.from(HorseExpert.MOD_ID);
+    static final RegistryManager REGISTRIES = RegistryManager.from(HorseExpert.MOD_ID);
+    public static final Holder.Reference<ArmorMaterial> MONOCLE_ARMOR_MATERIAL;
     public static final Holder.Reference<Item> MONOCLE_ITEM;
 
     static final BoundTagFactory TAGS = BoundTagFactory.make(HorseExpert.MOD_ID);
@@ -23,14 +26,15 @@ public class ModRegistry {
 
     static {
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("curios") || ModLoaderEnvironment.INSTANCE.isModLoaded("trinkets")) {
-            MONOCLE_ITEM = REGISTRY.registerItem("monocle", () -> new Item(new Item.Properties().stacksTo(1)));
+            MONOCLE_ARMOR_MATERIAL = REGISTRIES.registerLazily(Registries.ARMOR_MATERIAL, "monocle");
+            MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> new Item(new Item.Properties().stacksTo(1)));
         } else {
-            ArmorMaterial armorMaterial = ItemEquipmentFactories.registerArmorMaterial(HorseExpert.id("monocle"), Ingredient::of);
-            MONOCLE_ITEM = REGISTRY.registerItem("monocle", () -> new ArmorItem(armorMaterial, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
+            MONOCLE_ARMOR_MATERIAL = REGISTRIES.registerArmorMaterial("monocle", Items.GOLD_NUGGET.builtInRegistryHolder());
+            MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> new ArmorItem(MONOCLE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
         }
     }
 
     public static void touch() {
-
+        // NO-OP
     }
 }

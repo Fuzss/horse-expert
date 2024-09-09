@@ -4,6 +4,7 @@ import fuzs.horseexpert.HorseExpert;
 import fuzs.horseexpert.config.ClientConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
@@ -18,16 +19,16 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.function.DoubleUnaryOperator;
 
-public record HorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect icon, Component line1, @Nullable Component line2) implements TooltipComponent {
+public record HorseAttributeTooltip(@Nullable Item item, @Nullable Holder<MobEffect> icon, Component line1, @Nullable Component line2) implements TooltipComponent {
     private static final DecimalFormat ATTRIBUTE_VALUE_FORMAT = Util.make(new DecimalFormat("#.##"), (p_41704_) -> {
         p_41704_.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ROOT));
     });
 
-    private HorseAttributeTooltip(MobEffect icon, double value, double min, double max, String translationKey) {
+    private HorseAttributeTooltip(Holder<MobEffect> icon, double value, double min, double max, String translationKey) {
         this(null, icon, value, min, max, translationKey, DoubleUnaryOperator.identity());
     }
 
-    private HorseAttributeTooltip(MobEffect icon, double value, double min, double max, String translationKey, DoubleUnaryOperator valueConverter) {
+    private HorseAttributeTooltip(Holder<MobEffect> icon, double value, double min, double max, String translationKey, DoubleUnaryOperator valueConverter) {
         this(null, icon, value, min, max, translationKey, valueConverter);
     }
 
@@ -35,15 +36,15 @@ public record HorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect ico
         this(item, null, value, min, max, translationKey, valueConverter);
     }
 
-    private HorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect icon, double value, double min, double max, String translationKey, DoubleUnaryOperator valueConverter) {
+    private HorseAttributeTooltip(@Nullable Item item, @Nullable Holder<MobEffect> icon, double value, double min, double max, String translationKey, DoubleUnaryOperator valueConverter) {
         this(item, icon, line1(value, categorizeValue(value, min, max), translationKey, valueConverter), line2(min, max, valueConverter));
     }
 
-    private HorseAttributeTooltip(MobEffect icon, double value, String translationKey) {
+    private HorseAttributeTooltip(Holder<MobEffect> icon, double value, String translationKey) {
         this(null, icon, value, translationKey, DoubleUnaryOperator.identity());
     }
 
-    private HorseAttributeTooltip(MobEffect icon, double value, String translationKey, DoubleUnaryOperator valueConverter) {
+    private HorseAttributeTooltip(Holder<MobEffect> icon, double value, String translationKey, DoubleUnaryOperator valueConverter) {
         this(null, icon, value, translationKey, valueConverter);
     }
 
@@ -51,7 +52,7 @@ public record HorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect ico
         this(item, null, value, translationKey, valueConverter);
     }
 
-    private HorseAttributeTooltip(@Nullable Item item, @Nullable MobEffect icon, double value, String translationKey, DoubleUnaryOperator valueConverter) {
+    private HorseAttributeTooltip(@Nullable Item item, @Nullable Holder<MobEffect> icon, double value, String translationKey, DoubleUnaryOperator valueConverter) {
         this(item, icon, line1(value, null, translationKey, valueConverter), null);
     }
 

@@ -1,4 +1,4 @@
-// 1.20.4	2024-01-31T09:31:07.15804	Tags for minecraft:item mod id vanilla
-6f2d6a1203532215c766bc9454407c48d3e53e07 data/curios/tags/items/head.json
-6f2d6a1203532215c766bc9454407c48d3e53e07 data/horseexpert/tags/items/inspection_equipment.json
-6f2d6a1203532215c766bc9454407c48d3e53e07 data/trinkets/tags/items/head/face.json
+// 1.21	2024-09-09T22:25:42.521483	Tags for minecraft:item mod id vanilla
+6f2d6a1203532215c766bc9454407c48d3e53e07 data/curios/tags/item/head.json
+6f2d6a1203532215c766bc9454407c48d3e53e07 data/horseexpert/tags/item/inspection_equipment.json
+6f2d6a1203532215c766bc9454407c48d3e53e07 data/trinkets/tags/item/head/face.json

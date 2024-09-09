@@ -9,6 +9,7 @@ import fuzs.horseexpert.core.CommonAbstractions;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
 import fuzs.puzzleslib.api.client.gui.v2.components.TooltipRenderHelper;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,13 +27,13 @@ import java.util.Optional;
 
 public class AttributeOverlayHandler {
 
-    public static void renderAttributeOverlay(Minecraft minecraft, GuiGraphics guiGraphics, float tickDelta, int screenWidth, int screenHeight) {
+    public static void renderAttributeOverlay(Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         isRenderingTooltipsAllowed(minecraft).ifPresent(abstractHorse -> {
             RenderSystem.enableBlend();
             RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             RenderSystem.disableDepthTest();
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            actuallyRenderAttributeOverlay(guiGraphics, screenWidth, screenHeight, abstractHorse, minecraft.font, minecraft.getItemRenderer());
+            actuallyRenderAttributeOverlay(guiGraphics, guiGraphics.guiWidth(), guiGraphics.guiHeight(), abstractHorse, minecraft.font, minecraft.getItemRenderer());
         });
     }
 
