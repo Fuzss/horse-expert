@@ -13,7 +13,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
     @Override
     public void addTranslations(TranslationBuilder builder) {
         builder.add(ModRegistry.MONOCLE_ITEM.value(), "Monocle");
-        builder.add("item.horseexpert.monocle.tooltip", "Wear builder and look at a mount to see its statistics!");
+        builder.add("item.horseexpert.monocle.tooltip", "Wear it and look at a mount to see all statistics!");
         builder.add("horse.tooltip.min", "Min: %s");
         builder.add("horse.tooltip.max", "Max: %s");
         builder.add("horse.tooltip.health", "Health: %s");

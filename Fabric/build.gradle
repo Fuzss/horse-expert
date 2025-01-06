@@ -8,5 +8,5 @@ dependencies {
     modApi libs.puzzleslib.fabric
 
     // Accessories
-    modApi "io.wispforest:accessories-fabric:1.2.3-beta+1.21.2"
+    modApi libs.accessories.fabric
 }

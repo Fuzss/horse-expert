@@ -4,11 +4,6 @@ dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.neoforge
 
-    // Accessories
-    modCompileOnly "io.wispforest:accessories-neoforge:1.2.3-beta+1.21.2"
-//    modRuntimeOnly("blue.endless:jankson:1.2.2")
-//    modRuntimeOnly("io.wispforest:endec:0.1.9")
-//    modRuntimeOnly("io.wispforest.endec:gson:0.1.5")
-//    modRuntimeOnly("io.wispforest.endec:jankson:0.1.6")
-//    modRuntimeOnly("io.wispforest.endec:netty:0.1.5")
+    // Accessories (runtime is broken on Architectury, but only testing it on Fabric is fine, and we also get the vanilla experience like that)
+    modCompileOnly libs.accessories.neoforge
 }

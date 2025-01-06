@@ -84,7 +84,7 @@ public record ClientHorseAttributeTooltip(@Nullable Item item,
         if (this.icon != null) {
             Minecraft minecraft = Minecraft.getInstance();
             TextureAtlasSprite atlasSprite = minecraft.getMobEffectTextures().get(this.icon);
-            guiGraphics.blitSprite(RenderType::guiTextured, atlasSprite, posX + 1, posY - FIRST_LINE_HEIGHT, 0, 18, 18);
+            guiGraphics.blitSprite(RenderType::guiTextured, atlasSprite, posX + 1, posY - FIRST_LINE_HEIGHT, 18, 18);
         }
     }
 }

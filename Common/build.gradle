@@ -5,7 +5,7 @@ dependencies {
     modApi libs.puzzleslib.common
 
     // Accessories
-    modApi "io.wispforest:accessories-common:1.2.3-beta+1.21.2"
+    modApi libs.accessories.common
 }
 
 tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {

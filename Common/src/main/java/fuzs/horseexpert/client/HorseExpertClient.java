@@ -11,6 +11,7 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.ClientTooltipComponentsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.LivingEntityRenderLayersContext;
+import fuzs.puzzleslib.api.client.event.v1.AddResourcePackReloadListenersCallback;
 import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
 import fuzs.puzzleslib.api.client.event.v1.gui.RenderGuiEvents;
 import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallbackV2;
@@ -33,6 +34,9 @@ public class HorseExpertClient implements ClientModConstructor {
         RenderGuiEvents.AFTER.register(AttributeOverlayHandler::onAfterRenderGui);
         ItemTooltipCallback.EVENT.register(MonocleTooltipHandler::onItemTooltip);
         ExtractRenderStateCallbackV2.EVENT.register(MonocleLayer::onExtractRenderState);
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
+            AddResourcePackReloadListenersCallback.EVENT.register(MonocleLayer::onAddResourcePackReloadListeners);
+        }
     }
 
     @Override
@@ -45,10 +49,10 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLivingEntityRenderLayers(LivingEntityRenderLayersContext context) {
-        // always register this, even when accessories is present, it is generally disabled then internally,
-        // but is still used for rendering the accessory
-        context.<PlayerRenderState, HumanoidModel<PlayerRenderState>>registerRenderLayer(EntityType.PLAYER,
-                MonocleLayer::new);
+        if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
+            context.<PlayerRenderState, HumanoidModel<PlayerRenderState>>registerRenderLayer(EntityType.PLAYER,
+                    MonocleLayer::new);
+        }
     }
 
     @Override
