@@ -3,38 +3,39 @@ package fuzs.horseexpert.init;
 import fuzs.horseexpert.HorseExpert;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
-import fuzs.puzzleslib.api.init.v3.tags.BoundTagFactory;
-import fuzs.puzzleslib.api.item.v2.ItemEquipmentFactories;
+import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.equipment.Equippable;
 
 public class ModRegistry {
     static final RegistryManager REGISTRIES = RegistryManager.from(HorseExpert.MOD_ID);
-    public static final Holder.Reference<ArmorMaterial> MONOCLE_ARMOR_MATERIAL;
-    public static final Holder.Reference<Item> MONOCLE_ITEM;
+    public static final Holder.Reference<Item> MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> {
+        Item.Properties properties = new Item.Properties().stacksTo(1);
+        if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
+            // the model must be present, so the default item renderer is not used
+            // the equipment definition leads nowhere, that is ok though
+            // rendering is done via a separate render layer
+            properties.component(DataComponents.EQUIPPABLE,
+                    Equippable.builder(EquipmentSlot.HEAD)
+                            .setEquipSound(SoundEvents.ARMOR_EQUIP_GOLD)
+                            .setModel(HorseExpert.id("monocle"))
+                            .setDamageOnHurt(false)
+                            .build());
+        }
+        return properties;
+    });
 
-    static final BoundTagFactory TAGS = BoundTagFactory.make(HorseExpert.MOD_ID);
+    static final TagFactory TAGS = TagFactory.make(HorseExpert.MOD_ID);
     public static final TagKey<Item> INSPECTION_EQUIPMENT_ITEM_TAG = TAGS.registerItemTag("inspection_equipment");
     public static final TagKey<EntityType<?>> INSPECTABLE_ENTITY_TYPE_TAG = TAGS.registerEntityTypeTag("inspectable");
 
-    static {
-        if (ModLoaderEnvironment.INSTANCE.isModLoaded("curios") || ModLoaderEnvironment.INSTANCE.isModLoaded("trinkets")) {
-            MONOCLE_ARMOR_MATERIAL = REGISTRIES.registerLazily(Registries.ARMOR_MATERIAL, "monocle");
-            MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> new Item(new Item.Properties().stacksTo(1)));
-        } else {
-            MONOCLE_ARMOR_MATERIAL = REGISTRIES.registerArmorMaterial("monocle", Items.GOLD_NUGGET.builtInRegistryHolder());
-            MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> new ArmorItem(MONOCLE_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1)));
-        }
-    }
-
-    public static void touch() {
+    public static void bootstrap() {
         // NO-OP
     }
 }

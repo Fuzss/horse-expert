@@ -13,8 +13,9 @@ public class HorseExpertNeoForge {
 
     public HorseExpertNeoForge() {
         ModConstructor.construct(HorseExpert.MOD_ID, HorseExpert::new);
-        DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID, ModEntityTypeTagProvider::new,
-                ModItemTagProvider::new, ModRecipeProvider::new
-        );
+        DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID,
+                ModEntityTypeTagProvider::new,
+                ModItemTagProvider::new,
+                ModRecipeProvider::new);
     }
 }

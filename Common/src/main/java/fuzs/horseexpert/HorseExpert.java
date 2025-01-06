@@ -4,8 +4,10 @@ import fuzs.horseexpert.config.ClientConfig;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.puzzleslib.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.api.core.v1.ModConstructor;
+import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.core.v1.context.BuildCreativeModeTabContentsContext;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
+import io.wispforest.accessories.api.AccessoryRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +22,14 @@ public class HorseExpert implements ModConstructor {
 
     @Override
     public void onConstructMod() {
-        ModRegistry.touch();
+        ModRegistry.bootstrap();
+    }
+
+    @Override
+    public void onCommonSetup() {
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
+            AccessoryRegistry.register(ModRegistry.MONOCLE_ITEM.value(), AccessoryRegistry.defaultAccessory());
+        }
     }
 
     @Override

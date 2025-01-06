@@ -17,13 +17,13 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
 
     @Override
     public void addRecipes(RecipeOutput recipeOutput) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModRegistry.MONOCLE_ITEM.value())
+        ShapedRecipeBuilder.shaped(this.items(), RecipeCategory.TOOLS, ModRegistry.MONOCLE_ITEM.value())
                 .define('#', Blocks.GLASS_PANE)
                 .define('X', Items.GOLD_NUGGET)
                 .pattern(" X ")
                 .pattern("X#X")
                 .pattern(" X ")
-                .unlockedBy(getHasName(Items.GOLD_NUGGET), has(Items.GOLD_NUGGET))
+                .unlockedBy(getHasName(Items.GOLD_NUGGET), this.has(Items.GOLD_NUGGET))
                 .save(recipeOutput);
     }
 }

@@ -44,6 +44,6 @@
   },
 
   "recommends": {
-    "trinkets": "*"
+    "accessories": "*"
   }
 }

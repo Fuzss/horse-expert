@@ -3,6 +3,9 @@ apply from: "https://raw.githubusercontent.com/Fuzss/modresources/main/gradle/${
 dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.common
+
+    // Accessories
+    modApi "io.wispforest:accessories-common:1.2.3-beta+1.21.2"
 }
 
 tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {

@@ -7,6 +7,6 @@ dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.fabric
 
-    // Trinkets
-    modApi libs.trinkets.fabric
+    // Accessories
+    modApi "io.wispforest:accessories-fabric:1.2.3-beta+1.21.2"
 }

@@ -46,7 +46,7 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ modId }]]
-modId = "curios"
+modId = "accessories"
 mandatory = false
 type = "optional"
 versionRange = "*"
