@@ -1,0 +1,14 @@
+{
+  "horse.tooltip.health": "Vida: %s",
+  "horse.tooltip.health.unit": "%s corazones",
+  "horse.tooltip.jump_height": "Altura de Salto: %s",
+  "horse.tooltip.jump_height.unit": "%s bloques",
+  "horse.tooltip.max": "Máx: %s",
+  "horse.tooltip.min": "Mín: %s",
+  "horse.tooltip.speed": "Velocidad: %s",
+  "horse.tooltip.speed.unit": "%s bloques/segundo",
+  "horse.tooltip.strength": "Almacenamiento: %s",
+  "horse.tooltip.strength.unit": "%s espacios",
+  "item.horseexpert.monocle": "Monóculo",
+  "item.horseexpert.monocle.tooltip": "¡Ponte esto y mira a un montaje para ver sus estadísticas!"
+}
