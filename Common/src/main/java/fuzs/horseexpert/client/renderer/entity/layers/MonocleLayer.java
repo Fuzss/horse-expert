@@ -7,7 +7,7 @@ import fuzs.horseexpert.client.renderer.ModRenderType;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.util.ItemEquipmentHelper;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
-import fuzs.puzzleslib.api.client.util.v1.RenderPropertyKey;
+import fuzs.puzzleslib.api.client.renderer.v1.RenderPropertyKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -36,9 +36,10 @@ import java.util.function.BiConsumer;
 
 public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
     static final ModelLayerFactory MODEL_LAYERS = ModelLayerFactory.from(HorseExpert.MOD_ID);
-    public static final ModelLayerLocation PLAYER_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.register("player",
+    public static final ModelLayerLocation PLAYER_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.registerModelLayer(
+            "player",
             "monocle");
-    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.register(
+    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.registerModelLayer(
             "player_baby",
             "monocle");
     public static final RenderPropertyKey<ItemStack> MONOCLE_ITEM_RENDER_PROPERTY_KEY = new RenderPropertyKey<>(

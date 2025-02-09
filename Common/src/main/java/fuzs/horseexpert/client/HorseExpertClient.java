@@ -14,7 +14,7 @@ import fuzs.puzzleslib.api.client.core.v1.context.LivingEntityRenderLayersContex
 import fuzs.puzzleslib.api.client.event.v1.AddResourcePackReloadListenersCallback;
 import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
 import fuzs.puzzleslib.api.client.event.v1.gui.RenderGuiEvents;
-import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallbackV2;
+import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallback;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
 import net.minecraft.client.model.HumanoidModel;
@@ -33,7 +33,7 @@ public class HorseExpertClient implements ClientModConstructor {
     private static void registerEventHandlers() {
         RenderGuiEvents.AFTER.register(AttributeOverlayHandler::onAfterRenderGui);
         ItemTooltipCallback.EVENT.register(MonocleTooltipHandler::onItemTooltip);
-        ExtractRenderStateCallbackV2.EVENT.register(MonocleLayer::onExtractRenderState);
+        ExtractRenderStateCallback.EVENT.register(MonocleLayer::onExtractRenderState);
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
             AddResourcePackReloadListenersCallback.EVENT.register(MonocleLayer::onAddResourcePackReloadListeners);
         }

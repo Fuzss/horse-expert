@@ -15,8 +15,13 @@ public class ModEntityTypeTagProvider extends AbstractTagProvider<EntityType<?>>
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
-        this.add(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG).add(EntityType.HORSE, EntityType.DONKEY, EntityType.MULE,
-                EntityType.ZOMBIE_HORSE, EntityType.SKELETON_HORSE, EntityType.LLAMA, EntityType.TRADER_LLAMA
-        );
+        this.tag(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)
+                .add(EntityType.HORSE,
+                        EntityType.DONKEY,
+                        EntityType.MULE,
+                        EntityType.ZOMBIE_HORSE,
+                        EntityType.SKELETON_HORSE,
+                        EntityType.LLAMA,
+                        EntityType.TRADER_LLAMA);
     }
 }
