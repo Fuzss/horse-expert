@@ -27,7 +27,7 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,8 +64,8 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
     }
 
     public static void onExtractRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
-        if (entity instanceof Player player && entityRenderState instanceof PlayerRenderState) {
-            ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(player,
+        if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof PlayerRenderState) {
+            ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(livingEntity,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG);
             RenderPropertyKey.setRenderProperty(entityRenderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY, itemStack);
         }
@@ -96,7 +96,12 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack itemStack = RenderPropertyKey.getRenderProperty(renderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY);
+        ItemStack itemStack;
+        if (RenderPropertyKey.containsRenderProperty(renderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY)) {
+            itemStack = RenderPropertyKey.getRenderProperty(renderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY);
+        } else {
+            itemStack = ItemStack.EMPTY;
+        }
         if (!itemStack.isEmpty()) {
             HumanoidModel<S> model = renderState.isBaby ? this.babyModel : this.model;
             model.setupAnim(renderState);
