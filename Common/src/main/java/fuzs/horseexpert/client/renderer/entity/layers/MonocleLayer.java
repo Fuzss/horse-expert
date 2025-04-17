@@ -3,7 +3,6 @@ package fuzs.horseexpert.client.renderer.entity.layers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.client.renderer.ModRenderType;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.util.ItemEquipmentHelper;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
@@ -13,6 +12,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -67,7 +67,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
         if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof PlayerRenderState) {
             ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(livingEntity,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG);
-            RenderPropertyKey.setRenderProperty(entityRenderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY, itemStack);
+            RenderPropertyKey.set(entityRenderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY, itemStack);
         }
     }
 
@@ -96,12 +96,9 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack itemStack;
-        if (RenderPropertyKey.containsRenderProperty(renderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY)) {
-            itemStack = RenderPropertyKey.getRenderProperty(renderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY);
-        } else {
-            itemStack = ItemStack.EMPTY;
-        }
+        ItemStack itemStack = RenderPropertyKey.getOrDefault(renderState,
+                MONOCLE_ITEM_RENDER_PROPERTY_KEY,
+                ItemStack.EMPTY);
         if (!itemStack.isEmpty()) {
             HumanoidModel<S> model = renderState.isBaby ? this.babyModel : this.model;
             model.setupAnim(renderState);
@@ -110,7 +107,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
             model.hat.visible = true;
             // custom armor foil buffer allowing for parts of the texture to be slightly transparent
             VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource,
-                    ModRenderType.armorCutoutTranslucentNoCull(TEXTURE_LOCATION),
+                    RenderType.armorTranslucent(TEXTURE_LOCATION),
                     itemStack.hasFoil());
             model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
         }

@@ -5,7 +5,7 @@ dependencies {
     modApi libs.puzzleslib.common
 
     // Accessories
-    modApi libs.accessories.common
+//    modApi libs.accessories.common
 }
 
 tasks.withType(net.fabricmc.loom.task.AbstractRemapJarTask).configureEach {

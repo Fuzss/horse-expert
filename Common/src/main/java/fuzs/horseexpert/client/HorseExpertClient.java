@@ -2,8 +2,6 @@ package fuzs.horseexpert.client;
 
 import fuzs.horseexpert.client.gui.screens.inventory.tooltip.ClientHorseAttributeTooltip;
 import fuzs.horseexpert.client.handler.AttributeOverlayHandler;
-import fuzs.horseexpert.client.handler.MonocleTooltipHandler;
-import fuzs.horseexpert.client.renderer.entity.layers.MonocleAccessoryRenderer;
 import fuzs.horseexpert.client.renderer.entity.layers.MonocleLayer;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
@@ -12,18 +10,20 @@ import fuzs.puzzleslib.api.client.core.v1.context.ClientTooltipComponentsContext
 import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.LivingEntityRenderLayersContext;
 import fuzs.puzzleslib.api.client.event.v1.AddResourcePackReloadListenersCallback;
-import fuzs.puzzleslib.api.client.event.v1.gui.ItemTooltipCallback;
 import fuzs.puzzleslib.api.client.event.v1.gui.RenderGuiEvents;
 import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallback;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
-import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 
 public class HorseExpertClient implements ClientModConstructor {
+    public static final Component MONOCLE_TOOLTIP_COMPONENT = Component.translatable("item.horseexpert.monocle.tooltip")
+            .withStyle(ChatFormatting.GRAY);
 
     @Override
     public void onConstructMod() {
@@ -32,7 +32,6 @@ public class HorseExpertClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         RenderGuiEvents.AFTER.register(AttributeOverlayHandler::onAfterRenderGui);
-        ItemTooltipCallback.EVENT.register(MonocleTooltipHandler::onItemTooltip);
         ExtractRenderStateCallback.EVENT.register(MonocleLayer::onExtractRenderState);
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
             AddResourcePackReloadListenersCallback.EVENT.register(MonocleLayer::onAddResourcePackReloadListeners);
@@ -41,9 +40,12 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onClientSetup() {
+        ItemTooltipRegistry.ITEM.registerItemTooltip(ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG,
+                MONOCLE_TOOLTIP_COMPONENT);
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            AccessoriesRendererRegistry.registerRenderer(ModRegistry.MONOCLE_ITEM.value(),
-                    MonocleAccessoryRenderer.getFactory());
+            // TODO enable Accessories again when available
+//            AccessoriesRendererRegistry.registerRenderer(ModRegistry.MONOCLE_ITEM.value(),
+//                    MonocleAccessoryRenderer.getFactory());
         }
     }
 

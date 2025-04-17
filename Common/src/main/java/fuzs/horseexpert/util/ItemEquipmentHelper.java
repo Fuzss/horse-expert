@@ -1,9 +1,6 @@
 package fuzs.horseexpert.util;
 
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
-import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.caching.ItemTagPredicate;
-import io.wispforest.accessories.api.slot.SlotEntryReference;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,9 +34,11 @@ public final class ItemEquipmentHelper {
     }
 
     private static ItemStack getAccessoriesItem(LivingEntity livingEntity, TagKey<Item> tagKey) {
-        return AccessoriesCapability.getOptionally(livingEntity).map((AccessoriesCapability capability) -> {
-            ItemTagPredicate itemTagPredicate = new ItemTagPredicate(tagKey.location().getPath() + "_check", tagKey);
-            return capability.getFirstEquipped(itemTagPredicate);
-        }).map(SlotEntryReference::stack).orElse(ItemStack.EMPTY);
+        // TODO enable Accessories again when available
+//        return AccessoriesCapability.getOptionally(livingEntity).map((AccessoriesCapability capability) -> {
+//            ItemTagPredicate itemTagPredicate = new ItemTagPredicate(tagKey.location().getPath() + "_check", tagKey);
+//            return capability.getFirstEquipped(itemTagPredicate);
+//        }).map(SlotEntryReference::stack).orElse(ItemStack.EMPTY);
+        return getVanillaItem(livingEntity, tagKey);
     }
 }

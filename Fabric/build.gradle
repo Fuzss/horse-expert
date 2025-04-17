@@ -8,5 +8,5 @@ dependencies {
     modApi libs.puzzleslib.fabric
 
     // Accessories
-    modApi libs.accessories.fabric
+//    modApi libs.accessories.fabric
 }

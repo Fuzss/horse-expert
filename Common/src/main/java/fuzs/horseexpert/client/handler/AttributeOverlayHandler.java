@@ -1,14 +1,12 @@
 package fuzs.horseexpert.client.handler;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.horseexpert.HorseExpert;
 import fuzs.horseexpert.config.ClientConfig;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.util.ItemEquipmentHelper;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
-import fuzs.puzzleslib.api.client.gui.v2.components.TooltipRenderHelper;
+import fuzs.puzzleslib.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -30,13 +28,6 @@ public class AttributeOverlayHandler {
 
     public static void onAfterRenderGui(Gui gui, GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         isRenderingTooltipsAllowed(gui.minecraft).ifPresent(abstractHorse -> {
-            RenderSystem.enableBlend();
-            RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR,
-                    GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
-                    GlStateManager.SourceFactor.ONE,
-                    GlStateManager.DestFactor.ZERO);
-            RenderSystem.disableDepthTest();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             actuallyRenderAttributeOverlay(guiGraphics,
                     guiGraphics.guiWidth(),
                     guiGraphics.guiHeight(),
@@ -53,8 +44,7 @@ public class AttributeOverlayHandler {
                 minecraft.crosshairPickEntity.getType().is(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)) {
             if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR &&
                     minecraft.cameraEntity instanceof Player player &&
-                    !ItemEquipmentHelper.getEquippedItem(player, ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG)
-                            .isEmpty() &&
+                    !ItemEquipmentHelper.getEquippedItem(player, ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG).isEmpty() &&
                     (!HorseExpert.CONFIG.get(ClientConfig.class).requiresSneaking || player.isShiftKeyDown())) {
                 if (player.getVehicle() != entity && (!(entity instanceof AbstractHorse abstractHorse) ||
                         !HorseExpert.CONFIG.get(ClientConfig.class).mustBeTamed || abstractHorse.isTamed())) {

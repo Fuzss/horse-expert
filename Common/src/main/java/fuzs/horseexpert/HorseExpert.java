@@ -7,7 +7,6 @@ import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.event.v1.BuildCreativeModeTabContentsCallback;
-import io.wispforest.accessories.api.AccessoryRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -37,7 +36,8 @@ public class HorseExpert implements ModConstructor {
     @Override
     public void onCommonSetup() {
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            AccessoryRegistry.register(ModRegistry.MONOCLE_ITEM.value(), AccessoryRegistry.defaultAccessory());
+            // TODO enable Accessories again when available
+//            AccessoryRegistry.register(ModRegistry.MONOCLE_ITEM.value(), AccessoryRegistry.defaultAccessory());
         }
     }
 

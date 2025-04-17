@@ -4,6 +4,6 @@ dependencies {
     // Puzzles Lib
     modApi libs.puzzleslib.neoforge
 
-    // Accessories (runtime is broken on Architectury, but only testing it on Fabric is fine, and we also get the vanilla experience like that)
-    modCompileOnly libs.accessories.neoforge
+    // Accessories
+//    modApi libs.accessories.neoforge
 }
