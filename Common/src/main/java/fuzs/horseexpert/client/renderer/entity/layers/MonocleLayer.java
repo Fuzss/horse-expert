@@ -15,8 +15,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
@@ -27,6 +29,7 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -76,6 +79,12 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                 (ResourceManagerReloadListener) (ResourceManager resourceManager) -> {
                     MonocleLayer.monocleLayer = new MonocleLayer<>(null, Minecraft.getInstance().getEntityModels());
                 });
+    }
+
+    public static void addLivingEntityRenderLayers(EntityType<?> entityType, LivingEntityRenderer<?, ?, ?> entityRenderer, EntityRendererProvider.Context context) {
+        if (entityRenderer instanceof PlayerRenderer playerRenderer) {
+            playerRenderer.addLayer(new MonocleLayer<>(playerRenderer, context));
+        }
     }
 
     public static <S extends LivingEntityRenderState> RenderLayer<S, ?> getLayer() {

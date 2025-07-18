@@ -7,9 +7,3 @@ dependencies {
     // Accessories
 //    modApi libs.accessories.neoforge
 }
-
-tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
-    doFirst {
-        patchLaunchCfg()
-    }
-}

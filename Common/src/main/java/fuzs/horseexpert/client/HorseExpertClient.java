@@ -10,8 +10,8 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.ClientTooltipComponentsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
-import fuzs.puzzleslib.api.client.core.v1.context.LivingEntityRenderLayersContext;
 import fuzs.puzzleslib.api.client.event.v1.AddResourcePackReloadListenersCallback;
+import fuzs.puzzleslib.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
 import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallback;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
@@ -19,9 +19,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
 
 public class HorseExpertClient implements ClientModConstructor {
     public static final Component MONOCLE_TOOLTIP_COMPONENT = Component.translatable("item.horseexpert.monocle.tooltip")
@@ -36,6 +34,8 @@ public class HorseExpertClient implements ClientModConstructor {
         ExtractRenderStateCallback.EVENT.register(MonocleLayer::onExtractRenderState);
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
             AddResourcePackReloadListenersCallback.EVENT.register(MonocleLayer::onAddResourcePackReloadListeners);
+        } else {
+            AddLivingEntityRenderLayersCallback.EVENT.register(MonocleLayer::addLivingEntityRenderLayers);
         }
     }
 
@@ -47,14 +47,6 @@ public class HorseExpertClient implements ClientModConstructor {
             // TODO enable Accessories again when available
 //            AccessoriesRendererRegistry.registerRenderer(ModRegistry.MONOCLE_ITEM.value(),
 //                    MonocleAccessoryRenderer.getFactory());
-        }
-    }
-
-    @Override
-    public void onRegisterLivingEntityRenderLayers(LivingEntityRenderLayersContext context) {
-        if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            context.<PlayerRenderState, HumanoidModel<PlayerRenderState>>registerRenderLayer(EntityType.PLAYER,
-                    MonocleLayer::new);
         }
     }
 
