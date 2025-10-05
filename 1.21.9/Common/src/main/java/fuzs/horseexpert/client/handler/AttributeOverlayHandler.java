@@ -43,7 +43,8 @@ public class AttributeOverlayHandler {
                 && minecraft.crosshairPickEntity instanceof LivingEntity entity
                 && minecraft.crosshairPickEntity.getType().is(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)) {
             if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR
-                    && minecraft.cameraEntity instanceof Player player && !ItemEquipmentHelper.getEquippedItem(player,
+                    && minecraft.getCameraEntity() instanceof Player player && !ItemEquipmentHelper.getEquippedItem(
+                    player,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG).isEmpty() && (
                     !HorseExpert.CONFIG.get(ClientConfig.class).requiresSneaking || player.isShiftKeyDown())) {
                 if (player.getVehicle() != entity && (!(entity instanceof AbstractHorse abstractHorse)

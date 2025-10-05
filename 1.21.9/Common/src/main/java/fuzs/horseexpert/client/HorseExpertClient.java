@@ -17,8 +17,12 @@ import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.network.chat.Component;
 
 public class HorseExpertClient implements ClientModConstructor {
@@ -57,11 +61,15 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        context.registerLayerDefinition(MonocleLayer.PLAYER_MONOCLE_MODEL_LAYER_LOCATION,
-                () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(1.02F), 0.0F), 64, 32));
-        context.registerLayerDefinition(MonocleLayer.PLAYER_BABY_MONOCLE_MODEL_LAYER_LOCATION,
-                () -> LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(1.02F), 0.0F), 64, 32)
-                        .apply(HumanoidModel.BABY_TRANSFORMER));
+        ArmorModelSet<LayerDefinition> armorModelSet = PlayerModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION,
+                new CubeDeformation(1.02F)).map((MeshDefinition meshDefinition) -> {
+            return LayerDefinition.create(meshDefinition, 64, 32);
+        });
+        ArmorModelSet<LayerDefinition> armorModelSet2 = armorModelSet.map((LayerDefinition layerDefinition) -> {
+            return layerDefinition.apply(HumanoidModel.BABY_TRANSFORMER);
+        });
+        context.registerLayerDefinition(MonocleLayer.PLAYER_MONOCLE_LOCATION, armorModelSet::head);
+        context.registerLayerDefinition(MonocleLayer.PLAYER_BABY_MONOCLE_LOCATION, armorModelSet2::head);
     }
 
     @Override

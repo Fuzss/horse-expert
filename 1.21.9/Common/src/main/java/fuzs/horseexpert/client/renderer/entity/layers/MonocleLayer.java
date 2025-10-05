@@ -1,33 +1,35 @@
 package fuzs.horseexpert.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import fuzs.horseexpert.HorseExpert;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.util.ItemEquipmentHelper;
 import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
-import fuzs.puzzleslib.api.client.renderer.v1.RenderPropertyKey;
+import fuzs.puzzleslib.api.client.renderer.v1.RenderStateExtraData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,14 +41,11 @@ import java.util.function.BiConsumer;
 
 public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
     static final ModelLayerFactory MODEL_LAYERS = ModelLayerFactory.from(HorseExpert.MOD_ID);
-    public static final ModelLayerLocation PLAYER_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.registerModelLayer(
-            "player",
+    public static final ModelLayerLocation PLAYER_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player",
             "monocle");
-    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_MODEL_LAYER_LOCATION = MODEL_LAYERS.registerModelLayer(
-            "player_baby",
+    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player_baby",
             "monocle");
-    public static final RenderPropertyKey<ItemStack> MONOCLE_ITEM_RENDER_PROPERTY_KEY = new RenderPropertyKey<>(
-            HorseExpert.id("monocle_item"));
+    public static final ContextKey<ItemStack> MONOCLE_ITEM_CONTEXT_KEY = new ContextKey<>(HorseExpert.id("monocle_item"));
     private static final ResourceLocation TEXTURE_LOCATION = HorseExpert.id(
             "textures/entity/equipment/humanoid/monocle.png");
 
@@ -62,15 +61,15 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
 
     private MonocleLayer(@Nullable RenderLayerParent<S, M> renderer, EntityModelSet entityModelSet) {
         super(renderer);
-        this.model = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_MONOCLE_MODEL_LAYER_LOCATION));
-        this.babyModel = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_BABY_MONOCLE_MODEL_LAYER_LOCATION));
+        this.model = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_MONOCLE_LOCATION));
+        this.babyModel = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_BABY_MONOCLE_LOCATION));
     }
 
     public static void onExtractRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
-        if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof PlayerRenderState) {
+        if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof AvatarRenderState) {
             ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(livingEntity,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG);
-            RenderPropertyKey.set(entityRenderState, MONOCLE_ITEM_RENDER_PROPERTY_KEY, itemStack);
+            RenderStateExtraData.set(entityRenderState, MONOCLE_ITEM_CONTEXT_KEY, itemStack);
         }
     }
 
@@ -82,8 +81,8 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
     }
 
     public static void addLivingEntityRenderLayers(EntityType<?> entityType, LivingEntityRenderer<?, ?, ?> entityRenderer, EntityRendererProvider.Context context) {
-        if (entityRenderer instanceof PlayerRenderer playerRenderer) {
-            playerRenderer.addLayer(new MonocleLayer<>(playerRenderer, context));
+        if (entityRenderer instanceof AvatarRenderer<?> avatarRenderer) {
+            avatarRenderer.addLayer(new MonocleLayer<>(avatarRenderer, context));
         }
     }
 
@@ -103,22 +102,36 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
         }
     }
 
+    /**
+     * @see net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer#renderLayers(EquipmentClientInfo.LayerType,
+     *         ResourceKey, Model, Object, ItemStack, PoseStack, SubmitNodeCollector, int, ResourceLocation, int, int)
+     */
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack itemStack = RenderPropertyKey.getOrDefault(renderState,
-                MONOCLE_ITEM_RENDER_PROPERTY_KEY,
-                ItemStack.EMPTY);
+    public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S renderState, float yRot, float xRot) {
+        ItemStack itemStack = RenderStateExtraData.getOrDefault(renderState, MONOCLE_ITEM_CONTEXT_KEY, ItemStack.EMPTY);
         if (!itemStack.isEmpty()) {
             HumanoidModel<S> model = renderState.isBaby ? this.babyModel : this.model;
-            model.setupAnim(renderState);
-            model.setAllVisible(false);
-            model.head.visible = true;
-            model.hat.visible = true;
-            // custom armor foil buffer allowing for parts of the texture to be slightly transparent
-            VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource,
-                    RenderType.armorTranslucent(TEXTURE_LOCATION),
-                    itemStack.hasFoil());
-            model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
+            // the armor foil buffer allows for parts of the texture to be slightly transparent
+            submitNodeCollector.order(1)
+                    .submitModel(model,
+                            renderState,
+                            poseStack,
+                            RenderType.armorTranslucent(TEXTURE_LOCATION),
+                            packedLight,
+                            OverlayTexture.NO_OVERLAY,
+                            renderState.outlineColor,
+                            null);
+            if (itemStack.hasFoil()) {
+                submitNodeCollector.order(2)
+                        .submitModel(model,
+                                renderState,
+                                poseStack,
+                                RenderType.armorEntityGlint(),
+                                packedLight,
+                                OverlayTexture.NO_OVERLAY,
+                                renderState.outlineColor,
+                                null);
+            }
         }
     }
 }
