@@ -1,0 +1,61 @@
+{
+    "mod": {
+        "id": "horseexpert",
+        "group": "fuzs.horseexpert",
+        "name": "Horse Expert",
+        "version": "21.11.0",
+        "authors": [
+            "Fuzs"
+        ],
+        "description": "You want to know what your horses are truly capable of? Check out their statistics!",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "horseexpert"
+        },
+        {
+            "name": "curseforge",
+            "slug": "horse-expert",
+            "id": "666942"
+        },
+        {
+            "name": "modrinth",
+            "slug": "horse-expert",
+            "id": "24CSPS1E"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "required"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

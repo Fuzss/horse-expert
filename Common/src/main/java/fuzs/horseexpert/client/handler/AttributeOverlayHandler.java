@@ -15,8 +15,8 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 
@@ -38,7 +38,10 @@ public class AttributeOverlayHandler {
     }
 
     private static Optional<LivingEntity> isRenderingTooltipsAllowed(Minecraft minecraft) {
-        if (minecraft.options.hideGui) return Optional.empty();
+        if (minecraft.options.hideGui) {
+            return Optional.empty();
+        }
+
         if (minecraft.options.getCameraType().isFirstPerson()
                 && minecraft.crosshairPickEntity instanceof LivingEntity entity
                 && minecraft.crosshairPickEntity.getType().is(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)) {
@@ -53,6 +56,7 @@ public class AttributeOverlayHandler {
                 }
             }
         }
+
         return Optional.empty();
     }
 
@@ -76,19 +80,23 @@ public class AttributeOverlayHandler {
             tooltipComponents.add(HorseAttributeTooltip.healthTooltip(entity.getAttributeValue(Attributes.MAX_HEALTH),
                     entity instanceof AbstractHorse));
         }
+
         if (!(entity instanceof Llama) || HorseExpert.CONFIG.get(ClientConfig.class).allLlamaAttributes) {
             if (entity.getAttributes().hasAttribute(Attributes.MOVEMENT_SPEED)) {
                 tooltipComponents.add(HorseAttributeTooltip.speedTooltip(entity.getAttributeValue(Attributes.MOVEMENT_SPEED),
                         entity instanceof AbstractHorse));
             }
+
             if (entity.getAttributes().hasAttribute(Attributes.JUMP_STRENGTH)) {
                 tooltipComponents.add(HorseAttributeTooltip.jumpHeightTooltip(entity.getAttributeValue(Attributes.JUMP_STRENGTH),
                         entity instanceof AbstractHorse));
             }
         }
+
         if (entity instanceof Llama llama) {
             tooltipComponents.add(HorseAttributeTooltip.strengthTooltip(llama.getStrength()));
         }
+
         return tooltipComponents;
     }
 }

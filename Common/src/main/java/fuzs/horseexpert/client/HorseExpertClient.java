@@ -10,18 +10,18 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.ClientTooltipComponentsContext;
 import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
-import fuzs.puzzleslib.api.client.event.v1.AddResourcePackReloadListenersCallback;
+import fuzs.puzzleslib.api.client.core.v1.context.ResourcePackReloadListenersContext;
 import fuzs.puzzleslib.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
 import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallback;
 import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.network.chat.Component;
 
@@ -36,9 +36,7 @@ public class HorseExpertClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ExtractRenderStateCallback.EVENT.register(MonocleLayer::onExtractRenderState);
-        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            AddResourcePackReloadListenersCallback.EVENT.register(MonocleLayer::onAddResourcePackReloadListeners);
-        } else {
+        if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
             AddLivingEntityRenderLayersCallback.EVENT.register(MonocleLayer::addLivingEntityRenderLayers);
         }
     }
@@ -77,5 +75,12 @@ public class HorseExpertClient implements ClientModConstructor {
         context.registerGuiLayer(GuiLayersContext.HELD_ITEM_TOOLTIP,
                 HorseExpert.id("attributes_tooltip"),
                 AttributeOverlayHandler::renderAttributesTooltip);
+    }
+
+    @Override
+    public void onAddResourcePackReloadListeners(ResourcePackReloadListenersContext context) {
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
+            MonocleLayer.onAddResourcePackReloadListeners(context::registerReloadListener);
+        }
     }
 }

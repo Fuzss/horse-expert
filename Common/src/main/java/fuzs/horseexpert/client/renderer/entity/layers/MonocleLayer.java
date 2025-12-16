@@ -11,7 +11,6 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -22,10 +21,11 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -34,7 +34,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -46,8 +46,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
     public static final ModelLayerLocation PLAYER_BABY_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player_baby",
             "monocle");
     public static final ContextKey<ItemStack> MONOCLE_ITEM_CONTEXT_KEY = new ContextKey<>(HorseExpert.id("monocle_item"));
-    private static final ResourceLocation TEXTURE_LOCATION = HorseExpert.id(
-            "textures/entity/equipment/humanoid/monocle.png");
+    private static final Identifier TEXTURE_LOCATION = HorseExpert.id("textures/entity/equipment/humanoid/monocle.png");
 
     @Nullable
     private static RenderLayer<?, ?> monocleLayer;
@@ -73,7 +72,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
         }
     }
 
-    public static void onAddResourcePackReloadListeners(BiConsumer<ResourceLocation, PreparableReloadListener> consumer) {
+    public static void onAddResourcePackReloadListeners(BiConsumer<Identifier, PreparableReloadListener> consumer) {
         consumer.accept(HorseExpert.id("monocle_layer"),
                 (ResourceManagerReloadListener) (ResourceManager resourceManager) -> {
                     MonocleLayer.monocleLayer = new MonocleLayer<>(null, Minecraft.getInstance().getEntityModels());
@@ -104,7 +103,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
 
     /**
      * @see net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer#renderLayers(EquipmentClientInfo.LayerType,
-     *         ResourceKey, Model, Object, ItemStack, PoseStack, SubmitNodeCollector, int, ResourceLocation, int, int)
+     *         ResourceKey, Model, Object, ItemStack, PoseStack, SubmitNodeCollector, int, Identifier, int, int)
      */
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S renderState, float yRot, float xRot) {
@@ -116,7 +115,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                     .submitModel(model,
                             renderState,
                             poseStack,
-                            RenderType.armorTranslucent(TEXTURE_LOCATION),
+                            RenderTypes.armorTranslucent(TEXTURE_LOCATION),
                             packedLight,
                             OverlayTexture.NO_OVERLAY,
                             renderState.outlineColor,
@@ -126,7 +125,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                         .submitModel(model,
                                 renderState,
                                 poseStack,
-                                RenderType.armorEntityGlint(),
+                                RenderTypes.armorEntityGlint(),
                                 packedLight,
                                 OverlayTexture.NO_OVERLAY,
                                 renderState.outlineColor,

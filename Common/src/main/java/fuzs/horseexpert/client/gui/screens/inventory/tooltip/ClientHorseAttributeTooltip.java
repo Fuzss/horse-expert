@@ -8,11 +8,11 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public record ClientHorseAttributeTooltip(@Nullable Item item,
                                           @Nullable Holder<MobEffect> icon,
@@ -64,9 +64,9 @@ public record ClientHorseAttributeTooltip(@Nullable Item item,
             guiGraphics.renderItem(new ItemStack(this.item), posX + 2, posY + 1 - FIRST_LINE_HEIGHT);
         }
         if (this.icon != null) {
-            ResourceLocation resourceLocation = Gui.getMobEffectSprite(this.icon);
+            Identifier identifier = Gui.getMobEffectSprite(this.icon);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-                    resourceLocation,
+                    identifier,
                     posX + 1,
                     posY - FIRST_LINE_HEIGHT,
                     18,
