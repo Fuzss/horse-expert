@@ -89,16 +89,16 @@ public record HorseAttributeTooltip(@Nullable Item item, @Nullable Holder<MobEff
 
     public static HorseAttributeTooltip speedTooltip(double value, boolean minMax) {
         if (minMax) {
-            return new HorseAttributeTooltip(MobEffects.MOVEMENT_SPEED, value, 0.1125, 0.3375, "horse.tooltip.speed", d -> d * 43.17);
+            return new HorseAttributeTooltip(MobEffects.MOVEMENT_SPEED, value, 0.1125, 0.3375, "horse.tooltip.speed", d -> d * 42.157796);
         }
-        return new HorseAttributeTooltip(MobEffects.MOVEMENT_SPEED, value, "horse.tooltip.speed", d -> d * 43.17);
+        return new HorseAttributeTooltip(MobEffects.MOVEMENT_SPEED, value, "horse.tooltip.speed", d -> d * 42.157796);
     }
 
     public static HorseAttributeTooltip jumpHeightTooltip(double value, boolean minMax) {
         if (minMax) {
-            return new HorseAttributeTooltip(MobEffects.JUMP, value, 0.4, 1.0, "horse.tooltip.jump_height", d -> Math.pow(d, 1.7) * 5.293);
+            return new HorseAttributeTooltip(MobEffects.JUMP, value, 0.4, 1.0, "horse.tooltip.jump_height", d -> {double height = 0; while(d > 0) { height += d; d = (d - .08) * .98 * .98; } return height;});
         }
-        return new HorseAttributeTooltip(MobEffects.JUMP, value, "horse.tooltip.jump_height", d -> Math.pow(d, 1.7) * 5.293);
+        return new HorseAttributeTooltip(MobEffects.JUMP, value, "horse.tooltip.jump_height", d -> {double height = 0; while(d > 0) { height += d; d = (d - .08) * .98 * .98; } return height;});
     }
 
     public static HorseAttributeTooltip strengthTooltip(double value) {
