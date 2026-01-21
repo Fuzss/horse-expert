@@ -1,0 +1,14 @@
+{
+  "horse.tooltip.health": "最大体力：%s",
+  "horse.tooltip.health.unit": "%s",
+  "horse.tooltip.jump_height": "跳躍力：%s",
+  "horse.tooltip.jump_height.unit": "%sブロック",
+  "horse.tooltip.max": "最大：%s",
+  "horse.tooltip.min": "最小：%s",
+  "horse.tooltip.speed": "速度：%s",
+  "horse.tooltip.speed.unit": "秒速%sブロック",
+  "horse.tooltip.strength": "容量：%s",
+  "horse.tooltip.strength.unit": "%sスロット",
+  "item.horseexpert.monocle": "モノクル",
+  "item.horseexpert.monocle.tooltip": "これでウマたちの能力もお見通しだ！"
+}
