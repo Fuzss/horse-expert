@@ -1,0 +1,14 @@
+{
+  "horse.tooltip.health": "Helse: %s",
+  "horse.tooltip.health.unit": "%s hjarter",
+  "horse.tooltip.jump_height": "Hopphøgde: %s",
+  "horse.tooltip.jump_height.unit": "%s blokker",
+  "horse.tooltip.max": "Maks: %s",
+  "horse.tooltip.min": "Min: %s",
+  "horse.tooltip.speed": "Hastighet: %s",
+  "horse.tooltip.speed.unit": "%s blokker/sekund",
+  "horse.tooltip.strength": "Beholdning: %s",
+  "horse.tooltip.strength.unit": "%s felt",
+  "item.horseexpert.monocle": "Monokkel",
+  "item.horseexpert.monocle.tooltip": "Ta den på deg og skoda eit ridedyr for å syne all statistikk!"
+}
