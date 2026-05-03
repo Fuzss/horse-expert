@@ -1,9 +1,9 @@
 package fuzs.horseexpert.init;
 
 import fuzs.horseexpert.HorseExpert;
-import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
-import fuzs.puzzleslib.api.init.v3.registry.RegistryManager;
-import fuzs.puzzleslib.api.init.v3.tags.TagFactory;
+import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
+import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
+import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;

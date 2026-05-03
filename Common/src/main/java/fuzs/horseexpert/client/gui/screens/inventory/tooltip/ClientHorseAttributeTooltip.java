@@ -3,7 +3,7 @@ package fuzs.horseexpert.client.gui.screens.inventory.tooltip;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
@@ -39,7 +39,7 @@ public record ClientHorseAttributeTooltip(@Nullable Item item,
     }
 
     @Override
-    public void renderText(GuiGraphics guiGraphics, Font font, int posX, int posY) {
+    public void extractText(GuiGraphicsExtractor guiGraphics, Font font, int posX, int posY) {
         int width1 = font.width(this.line1);
         int width2 = this.line2 != null ? font.width(this.line2) : 0;
         int startX1, startX2;
@@ -49,20 +49,23 @@ public record ClientHorseAttributeTooltip(@Nullable Item item,
         } else {
             startX2 += (width1 - width2) / 2;
         }
+
         if (this.line2 == null) {
             posY += 5;
         }
-        guiGraphics.drawString(font, this.line1, posX + ICON_SIZE + startX1, posY - FIRST_LINE_HEIGHT, -1);
+
+        guiGraphics.text(font, this.line1, posX + ICON_SIZE + startX1, posY - FIRST_LINE_HEIGHT, -1);
         if (this.line2 != null) {
-            guiGraphics.drawString(font, this.line2, posX + ICON_SIZE + startX2, posY + 10 - FIRST_LINE_HEIGHT, -1);
+            guiGraphics.text(font, this.line2, posX + ICON_SIZE + startX2, posY + 10 - FIRST_LINE_HEIGHT, -1);
         }
     }
 
     @Override
-    public void renderImage(Font font, int posX, int posY, int width, int height, GuiGraphics guiGraphics) {
+    public void extractImage(Font font, int posX, int posY, int width, int height, GuiGraphicsExtractor guiGraphics) {
         if (this.item != null) {
-            guiGraphics.renderItem(new ItemStack(this.item), posX + 2, posY + 1 - FIRST_LINE_HEIGHT);
+            guiGraphics.item(new ItemStack(this.item), posX + 2, posY + 1 - FIRST_LINE_HEIGHT);
         }
+
         if (this.icon != null) {
             Identifier identifier = Gui.getMobEffectSprite(this.icon);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,

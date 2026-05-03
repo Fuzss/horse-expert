@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.horseexpert.HorseExpert;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.util.ItemEquipmentHelper;
-import fuzs.puzzleslib.api.client.init.v1.ModelLayerFactory;
-import fuzs.puzzleslib.api.client.renderer.v1.RenderStateExtraData;
+import fuzs.puzzleslib.common.api.client.init.v1.ModelLayerFactory;
+import fuzs.puzzleslib.common.api.client.renderer.v1.RenderStateExtraData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -64,7 +64,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
         this.babyModel = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_BABY_MONOCLE_LOCATION));
     }
 
-    public static void onExtractRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
+    public static void onExtractEntityRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
         if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof AvatarRenderState) {
             ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(livingEntity,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG);

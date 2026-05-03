@@ -6,15 +6,15 @@ import fuzs.horseexpert.client.handler.AttributeOverlayHandler;
 import fuzs.horseexpert.client.renderer.entity.layers.MonocleLayer;
 import fuzs.horseexpert.init.ModRegistry;
 import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
-import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.api.client.core.v1.context.ClientTooltipComponentsContext;
-import fuzs.puzzleslib.api.client.core.v1.context.GuiLayersContext;
-import fuzs.puzzleslib.api.client.core.v1.context.LayerDefinitionsContext;
-import fuzs.puzzleslib.api.client.core.v1.context.ResourcePackReloadListenersContext;
-import fuzs.puzzleslib.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
-import fuzs.puzzleslib.api.client.event.v1.renderer.ExtractRenderStateCallback;
-import fuzs.puzzleslib.api.client.gui.v2.tooltip.ItemTooltipRegistry;
-import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
+import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
+import fuzs.puzzleslib.common.api.client.core.v1.context.ClientTooltipComponentsContext;
+import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
+import fuzs.puzzleslib.common.api.client.core.v1.context.LayerDefinitionsContext;
+import fuzs.puzzleslib.common.api.client.core.v1.context.ResourcePackReloadListenersContext;
+import fuzs.puzzleslib.common.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
+import fuzs.puzzleslib.common.api.client.event.v1.renderer.ExtractEntityRenderStateCallback;
+import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.ItemTooltipRegistry;
+import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
@@ -35,7 +35,7 @@ public class HorseExpertClient implements ClientModConstructor {
     }
 
     private static void registerEventHandlers() {
-        ExtractRenderStateCallback.EVENT.register(MonocleLayer::onExtractRenderState);
+        ExtractEntityRenderStateCallback.EVENT.register(MonocleLayer::onExtractEntityRenderState);
         if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
             AddLivingEntityRenderLayersCallback.EVENT.register(MonocleLayer::addLivingEntityRenderLayers);
         }
@@ -74,7 +74,7 @@ public class HorseExpertClient implements ClientModConstructor {
     public void onRegisterGuiLayers(GuiLayersContext context) {
         context.registerGuiLayer(GuiLayersContext.HELD_ITEM_TOOLTIP,
                 HorseExpert.id("attributes_tooltip"),
-                AttributeOverlayHandler::renderAttributesTooltip);
+                AttributeOverlayHandler::extractRenderState);
     }
 
     @Override

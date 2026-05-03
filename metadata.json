@@ -1,9 +1,10 @@
 {
+    "minecraft": "26.1.2",
     "mod": {
         "id": "horseexpert",
         "group": "fuzs.horseexpert",
         "name": "Horse Expert",
-        "version": "21.11.0",
+        "version": "26.1.0",
         "authors": [
             "Fuzs"
         ],
@@ -36,13 +37,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "horseexpert"
-        },
-        {
             "name": "curseforge",
             "slug": "horse-expert",
             "id": "666942"
+        },
+        {
+            "name": "github",
+            "slug": "horse-expert"
         },
         {
             "name": "modrinth",
