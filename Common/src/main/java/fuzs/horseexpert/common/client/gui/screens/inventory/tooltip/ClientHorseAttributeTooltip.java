@@ -1,6 +1,6 @@
-package fuzs.horseexpert.client.gui.screens.inventory.tooltip;
+package fuzs.horseexpert.common.client.gui.screens.inventory.tooltip;
 
-import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
+import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

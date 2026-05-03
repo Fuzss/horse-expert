@@ -1,4 +1,4 @@
-package fuzs.horseexpert.util;
+package fuzs.horseexpert.common.util;
 
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import net.minecraft.tags.TagKey;

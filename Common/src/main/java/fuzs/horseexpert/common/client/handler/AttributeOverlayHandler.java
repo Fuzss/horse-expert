@@ -1,10 +1,10 @@
-package fuzs.horseexpert.client.handler;
+package fuzs.horseexpert.common.client.handler;
 
-import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.config.ClientConfig;
-import fuzs.horseexpert.init.ModRegistry;
-import fuzs.horseexpert.util.ItemEquipmentHelper;
-import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
+import fuzs.horseexpert.common.HorseExpert;
+import fuzs.horseexpert.common.config.ClientConfig;
+import fuzs.horseexpert.common.init.ModRegistry;
+import fuzs.horseexpert.common.util.ItemEquipmentHelper;
+import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.TooltipRenderHelper;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -25,7 +25,9 @@ public class AttributeOverlayHandler {
 
     public static void extractRenderState(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         LivingEntity entity = getInspectableEntity();
-        extractTooltipComponents(guiGraphics, guiGraphics.guiWidth(), guiGraphics.guiHeight(), entity);
+        if (entity != null) {
+            extractTooltipComponents(guiGraphics, guiGraphics.guiWidth(), guiGraphics.guiHeight(), entity);
+        }
     }
 
     private static @Nullable LivingEntity getInspectableEntity() {

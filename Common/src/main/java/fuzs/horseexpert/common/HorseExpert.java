@@ -1,7 +1,7 @@
-package fuzs.horseexpert;
+package fuzs.horseexpert.common;
 
-import fuzs.horseexpert.config.ClientConfig;
-import fuzs.horseexpert.init.ModRegistry;
+import fuzs.horseexpert.common.config.ClientConfig;
+import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;

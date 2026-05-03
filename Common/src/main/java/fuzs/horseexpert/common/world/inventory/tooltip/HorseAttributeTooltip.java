@@ -1,7 +1,7 @@
-package fuzs.horseexpert.world.inventory.tooltip;
+package fuzs.horseexpert.common.world.inventory.tooltip;
 
-import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.config.ClientConfig;
+import fuzs.horseexpert.common.HorseExpert;
+import fuzs.horseexpert.common.config.ClientConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.Util;
 import net.minecraft.core.Holder;

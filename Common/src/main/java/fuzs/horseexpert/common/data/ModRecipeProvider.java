@@ -1,6 +1,6 @@
-package fuzs.horseexpert.data;
+package fuzs.horseexpert.common.data;
 
-import fuzs.horseexpert.init.ModRegistry;
+import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.puzzleslib.common.api.data.v2.AbstractRecipeProvider;
 import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 import net.minecraft.data.recipes.RecipeCategory;

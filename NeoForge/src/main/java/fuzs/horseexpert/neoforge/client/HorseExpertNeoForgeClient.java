@@ -1,9 +1,9 @@
 package fuzs.horseexpert.neoforge.client;
 
-import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.client.HorseExpertClient;
-import fuzs.horseexpert.data.client.ModLanguageProvider;
-import fuzs.horseexpert.data.client.ModModelProvider;
+import fuzs.horseexpert.common.HorseExpert;
+import fuzs.horseexpert.common.client.HorseExpertClient;
+import fuzs.horseexpert.common.data.client.ModLanguageProvider;
+import fuzs.horseexpert.common.data.client.ModModelProvider;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.api.distmarker.Dist;

@@ -1,6 +1,6 @@
-package fuzs.horseexpert.data.client;
+package fuzs.horseexpert.common.data.client;
 
-import fuzs.horseexpert.init.ModRegistry;
+import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.puzzleslib.common.api.client.data.v2.AbstractLanguageProvider;
 import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
 

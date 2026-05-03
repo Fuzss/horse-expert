@@ -1,6 +1,6 @@
 package fuzs.horseexpert.fabric;
 
-import fuzs.horseexpert.HorseExpert;
+import fuzs.horseexpert.common.HorseExpert;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
 import net.fabricmc.api.ModInitializer;
 

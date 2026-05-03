@@ -1,9 +1,9 @@
-package fuzs.horseexpert.client.renderer.entity.layers;
+package fuzs.horseexpert.common.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.init.ModRegistry;
-import fuzs.horseexpert.util.ItemEquipmentHelper;
+import fuzs.horseexpert.common.HorseExpert;
+import fuzs.horseexpert.common.init.ModRegistry;
+import fuzs.horseexpert.common.util.ItemEquipmentHelper;
 import fuzs.puzzleslib.common.api.client.init.v1.ModelLayerFactory;
 import fuzs.puzzleslib.common.api.client.renderer.v1.RenderStateExtraData;
 import net.minecraft.client.Minecraft;

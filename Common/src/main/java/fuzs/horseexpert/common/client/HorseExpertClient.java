@@ -1,11 +1,11 @@
-package fuzs.horseexpert.client;
+package fuzs.horseexpert.common.client;
 
-import fuzs.horseexpert.HorseExpert;
-import fuzs.horseexpert.client.gui.screens.inventory.tooltip.ClientHorseAttributeTooltip;
-import fuzs.horseexpert.client.handler.AttributeOverlayHandler;
-import fuzs.horseexpert.client.renderer.entity.layers.MonocleLayer;
-import fuzs.horseexpert.init.ModRegistry;
-import fuzs.horseexpert.world.inventory.tooltip.HorseAttributeTooltip;
+import fuzs.horseexpert.common.HorseExpert;
+import fuzs.horseexpert.common.client.gui.screens.inventory.tooltip.ClientHorseAttributeTooltip;
+import fuzs.horseexpert.common.client.handler.AttributeOverlayHandler;
+import fuzs.horseexpert.common.client.renderer.entity.layers.MonocleLayer;
+import fuzs.horseexpert.common.init.ModRegistry;
+import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.ClientTooltipComponentsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;

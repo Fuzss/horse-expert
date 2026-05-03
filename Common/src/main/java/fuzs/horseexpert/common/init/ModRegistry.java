@@ -1,6 +1,6 @@
-package fuzs.horseexpert.init;
+package fuzs.horseexpert.common.init;
 
-import fuzs.horseexpert.HorseExpert;
+import fuzs.horseexpert.common.HorseExpert;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
