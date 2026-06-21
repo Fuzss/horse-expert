@@ -11,17 +11,20 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 
 public class ModRegistry {
     static final RegistryManager REGISTRIES = RegistryManager.from(HorseExpert.MOD_ID);
+    public static final ResourceKey<EquipmentAsset> MONOCLE_EQUIPMENT_ASSET = REGISTRIES.makeResourceKey(EquipmentAssets.ROOT_ID,
+            "monocle");
     public static final Holder.Reference<Item> MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> {
         return new Item.Properties().stacksTo(1)
                 .component(DataComponents.EQUIPPABLE,
                         Equippable.builder(EquipmentSlot.HEAD)
                                 .setEquipSound(SoundEvents.ARMOR_EQUIP_GOLD)
-                                .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, HorseExpert.id("monocle")))
+                                .setAsset(MONOCLE_EQUIPMENT_ASSET)
                                 .setDamageOnHurt(false)
                                 .build());
     });

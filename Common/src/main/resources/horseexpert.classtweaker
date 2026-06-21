@@ -1,1 +1,5 @@
 classTweaker    v2  official
+accessible	field	net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer	equipmentAssets	Lnet/minecraft/client/resources/model/EquipmentAssetManager;
+accessible	field	net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer	layerTextureLookup	Ljava/util/function/Function;
+accessible  class   net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer$LayerTextureKey
+accessible  method  net/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer$LayerTextureKey  <init>  (Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/client/resources/model/EquipmentClientInfo$Layer;)V

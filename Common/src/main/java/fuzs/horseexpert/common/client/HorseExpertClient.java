@@ -3,6 +3,8 @@ package fuzs.horseexpert.common.client;
 import fuzs.horseexpert.common.HorseExpert;
 import fuzs.horseexpert.common.client.gui.screens.inventory.tooltip.ClientHorseAttributeTooltip;
 import fuzs.horseexpert.common.client.handler.AttributeOverlayHandler;
+import fuzs.horseexpert.common.client.init.ModEnumConstants;
+import fuzs.horseexpert.common.client.model.geom.ModModelLayers;
 import fuzs.horseexpert.common.client.renderer.entity.layers.MonocleLayer;
 import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
@@ -23,6 +25,7 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onConstructMod() {
+        ModEnumConstants.bootstrap();
         registerEventHandlers();
     }
 
@@ -44,8 +47,8 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        context.registerLayerDefinition(MonocleLayer.PLAYER_MONOCLE_LAYER, MonocleLayer::createHeadLayer);
-        context.registerLayerDefinition(MonocleLayer.PLAYER_BABY_MONOCLE_LAYER, () -> {
+        context.registerLayerDefinition(ModModelLayers.PLAYER_MONOCLE_LAYER, MonocleLayer::createHeadLayer);
+        context.registerLayerDefinition(ModModelLayers.PLAYER_BABY_MONOCLE_LAYER, () -> {
             return MonocleLayer.createHeadLayer().apply(HumanoidModel.BABY_TRANSFORMER);
         });
     }
@@ -53,7 +56,7 @@ public class HorseExpertClient implements ClientModConstructor {
     @Override
     public void onRegisterGuiLayers(GuiLayersContext context) {
         context.registerGuiLayer(GuiLayersContext.HELD_ITEM_TOOLTIP,
-                HorseExpert.id("attributes_tooltip"),
+                HorseExpert.id("tooltip"),
                 AttributeOverlayHandler::extractRenderState);
     }
 }

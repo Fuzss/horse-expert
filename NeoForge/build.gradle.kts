@@ -21,3 +21,9 @@ dependencies {
     modApi(sharedLibs.puzzleslib.neoforge)
     api(sharedLibs.trinkets.neoforge)
 }
+
+multiloader {
+    modFile {
+        enumExtensions.set("META-INF/enumextensions.json")
+    }
+}

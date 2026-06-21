@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "horseexpert/humanoid_head": [
+      {
+        "texture": "horseexpert:monocle"
+      }
+    ]
+  }
+}

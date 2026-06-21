@@ -1,0 +1,12 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/client/resources/model/EquipmentClientInfo$LayerType",
+      "name": "HORSEEXPERT_HUMANOID_HEAD",
+      "constructor": "(Ljava/lang/String;)V",
+      "parameters": [
+        "horseexpert:humanoid_head"
+      ]
+    }
+  ]
+}

@@ -3,10 +3,10 @@ package fuzs.horseexpert.common.world.inventory.tooltip;
 import fuzs.horseexpert.common.HorseExpert;
 import fuzs.horseexpert.common.config.ClientConfig;
 import net.minecraft.ChatFormatting;
-import net.minecraft.util.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Util;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -93,7 +93,7 @@ public record HorseAttributeTooltip(@Nullable Item item,
     }
 
     public static HorseAttributeTooltip healthTooltip(double value, boolean minMax) {
-        // half health values as our translation string says hearts
+        // Use half-health values as our translation string says hearts.
         if (minMax) {
             return new HorseAttributeTooltip(MobEffects.HEALTH_BOOST, value / 2.0, 7.5, 15.0, "horse.tooltip.health");
         }

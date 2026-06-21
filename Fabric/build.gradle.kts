@@ -22,3 +22,9 @@ dependencies {
     modApi(sharedLibs.puzzleslib.fabric)
     api(sharedLibs.trinkets.fabric)
 }
+
+multiloader {
+    mixins {
+        clientMixin("EquipmentClientInfo\u0024LayerTypeFabricMixin")
+    }
+}
