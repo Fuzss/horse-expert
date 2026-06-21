@@ -1,11 +1,16 @@
 package fuzs.horseexpert.common.util;
 
+import eu.pb4.trinkets.api.TrinketSlotAccess;
+import eu.pb4.trinkets.api.TrinketsApi;
 import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Optional;
 
 public final class ItemEquipmentHelper {
 
@@ -13,32 +18,28 @@ public final class ItemEquipmentHelper {
         // NO-OP
     }
 
-    public static ItemStack getEquippedItem(LivingEntity livingEntity, TagKey<Item> tagKey) {
-        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            return getAccessoriesItem(livingEntity, tagKey);
-        } else {
-            return getVanillaItem(livingEntity, tagKey);
-        }
+    public static ItemStack getEquippedItem(LivingEntity livingEntity, TagKey<Item> tag) {
+        return getTrinket(livingEntity, tag).orElseGet(() -> {
+            return getEquipment(livingEntity, tag);
+        });
     }
 
-    private static ItemStack getVanillaItem(LivingEntity livingEntity, TagKey<Item> tagKey) {
-        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if (equipmentSlot != EquipmentSlot.MAINHAND) {
-                ItemStack itemStack = livingEntity.getItemBySlot(equipmentSlot);
-                if (itemStack.is(tagKey) && livingEntity.getEquipmentSlotForItem(itemStack) == equipmentSlot) {
-                    return itemStack;
-                }
+    private static ItemStack getEquipment(LivingEntity livingEntity, TagKey<Item> tag) {
+        for (EquipmentSlot equipmentSlot : EquipmentSlotGroup.ARMOR) {
+            ItemStack item = livingEntity.getItemBySlot(equipmentSlot);
+            if (item.is(tag) && livingEntity.getEquipmentSlotForItem(item) == equipmentSlot) {
+                return item;
             }
         }
+
         return ItemStack.EMPTY;
     }
 
-    private static ItemStack getAccessoriesItem(LivingEntity livingEntity, TagKey<Item> tagKey) {
-        // TODO enable Accessories again when available
-//        return AccessoriesCapability.getOptionally(livingEntity).map((AccessoriesCapability capability) -> {
-//            ItemTagPredicate itemTagPredicate = new ItemTagPredicate(tagKey.location().getPath() + "_check", tagKey);
-//            return capability.getFirstEquipped(itemTagPredicate);
-//        }).map(SlotEntryReference::stack).orElse(ItemStack.EMPTY);
-        return getVanillaItem(livingEntity, tagKey);
+    private static Optional<ItemStack> getTrinket(LivingEntity livingEntity, TagKey<Item> tag) {
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("trinkets_updated")) {
+            return TrinketsApi.getAttachment(livingEntity).findFirst(tag, true).map(TrinketSlotAccess::get);
+        } else {
+            return Optional.empty();
+        }
     }
 }

@@ -4,7 +4,6 @@ import fuzs.horseexpert.common.config.ClientConfig;
 import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.puzzleslib.common.api.config.v3.ConfigHolder;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
-import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.common.api.event.v1.BuildCreativeModeTabContentsCallback;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,17 +26,9 @@ public class HorseExpert implements ModConstructor {
 
     private static void registerEventHandlers() {
         BuildCreativeModeTabContentsCallback.buildCreativeModeTabContents(CreativeModeTabs.TOOLS_AND_UTILITIES)
-                .register((CreativeModeTab creativeModeTab, CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) -> {
+                .register((CreativeModeTab creativeModeTab, CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) -> {
                     output.accept(ModRegistry.MONOCLE_ITEM.value());
                 });
-    }
-
-    @Override
-    public void onCommonSetup() {
-        if (ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            // TODO enable Accessories again when available
-//            AccessoryRegistry.register(ModRegistry.MONOCLE_ITEM.value(), AccessoryRegistry.defaultAccessory());
-        }
     }
 
     public static Identifier id(String path) {

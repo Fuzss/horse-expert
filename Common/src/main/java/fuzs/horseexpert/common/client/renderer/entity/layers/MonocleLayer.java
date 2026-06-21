@@ -6,10 +6,8 @@ import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.horseexpert.common.util.ItemEquipmentHelper;
 import fuzs.puzzleslib.common.api.client.init.v1.ModelLayerFactory;
 import fuzs.puzzleslib.common.api.client.renderer.v1.RenderStateExtraData;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -20,24 +18,16 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import org.jspecify.annotations.Nullable;
-
-import java.util.Objects;
-import java.util.function.BiConsumer;
 
 public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
     static final ModelLayerFactory MODEL_LAYERS = ModelLayerFactory.from(HorseExpert.MOD_ID);
@@ -45,59 +35,29 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
             "monocle");
     public static final ModelLayerLocation PLAYER_BABY_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player_baby",
             "monocle");
-    public static final ContextKey<ItemStack> MONOCLE_ITEM_CONTEXT_KEY = new ContextKey<>(HorseExpert.id("monocle_item"));
+    public static final ContextKey<ItemStack> MONOCLE_ITEM_KEY = new ContextKey<>(HorseExpert.id("monocle_item"));
     private static final Identifier TEXTURE_LOCATION = HorseExpert.id("textures/entity/equipment/humanoid/monocle.png");
-
-    @Nullable
-    private static RenderLayer<?, ?> monocleLayer;
 
     private final HumanoidModel<S> model;
     private final HumanoidModel<S> babyModel;
 
-    public MonocleLayer(RenderLayerParent<S, M> renderer, EntityRendererProvider.Context context) {
-        this(renderer, context.getModelSet());
-    }
-
-    private MonocleLayer(@Nullable RenderLayerParent<S, M> renderer, EntityModelSet entityModelSet) {
+    private MonocleLayer(RenderLayerParent<S, M> renderer, EntityRendererProvider.Context context) {
         super(renderer);
-        this.model = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_MONOCLE_LOCATION));
-        this.babyModel = new HumanoidModel<>(entityModelSet.bakeLayer(PLAYER_BABY_MONOCLE_LOCATION));
+        this.model = new HumanoidModel<>(context.bakeLayer(PLAYER_MONOCLE_LOCATION));
+        this.babyModel = new HumanoidModel<>(context.bakeLayer(PLAYER_BABY_MONOCLE_LOCATION));
     }
 
     public static void onExtractEntityRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
         if (entity instanceof LivingEntity livingEntity && entityRenderState instanceof AvatarRenderState) {
             ItemStack itemStack = ItemEquipmentHelper.getEquippedItem(livingEntity,
                     ModRegistry.INSPECTION_EQUIPMENT_ITEM_TAG);
-            RenderStateExtraData.set(entityRenderState, MONOCLE_ITEM_CONTEXT_KEY, itemStack);
+            RenderStateExtraData.set(entityRenderState, MONOCLE_ITEM_KEY, itemStack);
         }
-    }
-
-    public static void onAddResourcePackReloadListeners(BiConsumer<Identifier, PreparableReloadListener> consumer) {
-        consumer.accept(HorseExpert.id("monocle_layer"),
-                (ResourceManagerReloadListener) (ResourceManager resourceManager) -> {
-                    MonocleLayer.monocleLayer = new MonocleLayer<>(null, Minecraft.getInstance().getEntityModels());
-                });
     }
 
     public static void addLivingEntityRenderLayers(EntityType<?> entityType, LivingEntityRenderer<?, ?, ?> entityRenderer, EntityRendererProvider.Context context) {
         if (entityRenderer instanceof AvatarRenderer<?> avatarRenderer) {
             avatarRenderer.addLayer(new MonocleLayer<>(avatarRenderer, context));
-        }
-    }
-
-    public static <S extends LivingEntityRenderState> RenderLayer<S, ?> getLayer() {
-        RenderLayer<?, ?> monocleLayer = MonocleLayer.monocleLayer;
-        Objects.requireNonNull(monocleLayer, "monocle layer is null");
-        return (RenderLayer<S, ?>) monocleLayer;
-    }
-
-    @Nullable
-    @Override
-    public M getParentModel() {
-        try {
-            return super.getParentModel();
-        } catch (NullPointerException exception) {
-            return null;
         }
     }
 
@@ -107,7 +67,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
      */
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack itemStack = RenderStateExtraData.getOrDefault(renderState, MONOCLE_ITEM_CONTEXT_KEY, ItemStack.EMPTY);
+        ItemStack itemStack = RenderStateExtraData.getOrDefault(renderState, MONOCLE_ITEM_KEY, ItemStack.EMPTY);
         if (!itemStack.isEmpty()) {
             HumanoidModel<S> model = renderState.isBaby ? this.babyModel : this.model;
             // the armor foil buffer allows for parts of the texture to be slightly transparent

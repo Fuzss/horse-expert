@@ -1,7 +1,6 @@
 package fuzs.horseexpert.common.init;
 
 import fuzs.horseexpert.common.HorseExpert;
-import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
 import net.minecraft.core.Holder;
@@ -18,19 +17,13 @@ import net.minecraft.world.item.equipment.Equippable;
 public class ModRegistry {
     static final RegistryManager REGISTRIES = RegistryManager.from(HorseExpert.MOD_ID);
     public static final Holder.Reference<Item> MONOCLE_ITEM = REGISTRIES.registerItem("monocle", () -> {
-        Item.Properties properties = new Item.Properties().stacksTo(1);
-        if (!ModLoaderEnvironment.INSTANCE.isModLoaded("accessories")) {
-            // the model must be present, so the default item renderer is not used
-            // the equipment definition leads nowhere, that is ok though
-            // rendering is done via a separate render layer
-            properties.component(DataComponents.EQUIPPABLE,
-                    Equippable.builder(EquipmentSlot.HEAD)
-                            .setEquipSound(SoundEvents.ARMOR_EQUIP_GOLD)
-                            .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, HorseExpert.id("monocle")))
-                            .setDamageOnHurt(false)
-                            .build());
-        }
-        return properties;
+        return new Item.Properties().stacksTo(1)
+                .component(DataComponents.EQUIPPABLE,
+                        Equippable.builder(EquipmentSlot.HEAD)
+                                .setEquipSound(SoundEvents.ARMOR_EQUIP_GOLD)
+                                .setAsset(ResourceKey.create(EquipmentAssets.ROOT_ID, HorseExpert.id("monocle")))
+                                .setDamageOnHurt(false)
+                                .build());
     });
 
     static final TagFactory TAGS = TagFactory.make(HorseExpert.MOD_ID);
