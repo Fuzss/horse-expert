@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     modApi(sharedLibs.puzzleslib.neoforge)
-    compileOnlyApi(sharedLibs.trinkets.neoforge)
+    api(sharedLibs.trinkets.neoforge)
 }
 
 multiloader {
