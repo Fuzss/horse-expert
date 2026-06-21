@@ -2,8 +2,8 @@ package fuzs.horseexpert.common.client.gui.screens.inventory.tooltip;
 
 import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
@@ -67,7 +67,7 @@ public record ClientHorseAttributeTooltip(@Nullable Item item,
         }
 
         if (this.icon != null) {
-            Identifier identifier = Gui.getMobEffectSprite(this.icon);
+            Identifier identifier = Hud.getMobEffectSprite(this.icon);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED,
                     identifier,
                     posX + 1,

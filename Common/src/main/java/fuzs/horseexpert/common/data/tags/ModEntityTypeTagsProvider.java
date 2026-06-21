@@ -6,6 +6,7 @@ import fuzs.puzzleslib.common.api.data.v2.tags.AbstractTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypeIds;
 
 public class ModEntityTypeTagsProvider extends AbstractTagProvider<EntityType<?>> {
 
@@ -16,12 +17,12 @@ public class ModEntityTypeTagsProvider extends AbstractTagProvider<EntityType<?>
     @Override
     public void addTags(HolderLookup.Provider provider) {
         this.tag(ModRegistry.INSPECTABLE_ENTITY_TYPE_TAG)
-                .add(EntityType.HORSE,
-                        EntityType.DONKEY,
-                        EntityType.MULE,
-                        EntityType.ZOMBIE_HORSE,
-                        EntityType.SKELETON_HORSE,
-                        EntityType.LLAMA,
-                        EntityType.TRADER_LLAMA);
+                .add(EntityTypeIds.HORSE,
+                        EntityTypeIds.DONKEY,
+                        EntityTypeIds.MULE,
+                        EntityTypeIds.ZOMBIE_HORSE,
+                        EntityTypeIds.SKELETON_HORSE,
+                        EntityTypeIds.LLAMA,
+                        EntityTypeIds.TRADER_LLAMA);
     }
 }

@@ -32,7 +32,7 @@ public class AttributeOverlayHandler {
 
     private static @Nullable LivingEntity getInspectableEntity() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.options.hideGui) {
+        if (minecraft.gui.hud.isHidden()) {
             return null;
         } else if (minecraft.options.getCameraType().isFirstPerson()
                 && minecraft.crosshairPickEntity instanceof LivingEntity entity && minecraft.crosshairPickEntity.is(
