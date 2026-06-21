@@ -6,6 +6,7 @@ import fuzs.horseexpert.common.data.ModTrinketsDataProvider;
 import fuzs.horseexpert.common.data.tags.ModEntityTypeTagsProvider;
 import fuzs.horseexpert.common.data.tags.ModItemTagsProvider;
 import fuzs.puzzleslib.common.api.core.v1.ModConstructor;
+import fuzs.puzzleslib.common.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
 import net.neoforged.fml.common.Mod;
 
@@ -17,7 +18,9 @@ public class HorseExpertNeoForge {
         DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID,
                 ModEntityTypeTagsProvider::new,
                 ModItemTagsProvider::new,
-                ModRecipeProvider::new,
-                ModTrinketsDataProvider::new);
+                ModRecipeProvider::new);
+        if (ModLoaderEnvironment.INSTANCE.isModLoaded("trinkets_updated")) {
+            DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID, ModTrinketsDataProvider::new);
+        }
     }
 }
