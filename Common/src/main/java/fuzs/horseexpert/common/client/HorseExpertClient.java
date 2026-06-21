@@ -15,12 +15,6 @@ import fuzs.puzzleslib.common.api.client.event.v1.renderer.ExtractEntityRenderSt
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.ItemTooltipRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.LayerDefinitions;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.player.PlayerModel;
-import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.network.chat.Component;
 
 public class HorseExpertClient implements ClientModConstructor {
@@ -50,15 +44,10 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onRegisterLayerDefinitions(LayerDefinitionsContext context) {
-        ArmorModelSet<LayerDefinition> armorModelSet = PlayerModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION,
-                new CubeDeformation(1.02F)).map((MeshDefinition meshDefinition) -> {
-            return LayerDefinition.create(meshDefinition, 64, 32);
+        context.registerLayerDefinition(MonocleLayer.PLAYER_MONOCLE_LAYER, MonocleLayer::createHeadLayer);
+        context.registerLayerDefinition(MonocleLayer.PLAYER_BABY_MONOCLE_LAYER, () -> {
+            return MonocleLayer.createHeadLayer().apply(HumanoidModel.BABY_TRANSFORMER);
         });
-        ArmorModelSet<LayerDefinition> armorModelSet2 = armorModelSet.map((LayerDefinition layerDefinition) -> {
-            return layerDefinition.apply(HumanoidModel.BABY_TRANSFORMER);
-        });
-        context.registerLayerDefinition(MonocleLayer.PLAYER_MONOCLE_LOCATION, armorModelSet::head);
-        context.registerLayerDefinition(MonocleLayer.PLAYER_BABY_MONOCLE_LOCATION, armorModelSet2::head);
     }
 
     @Override

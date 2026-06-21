@@ -8,7 +8,12 @@ import fuzs.puzzleslib.common.api.client.init.v1.ModelLayerFactory;
 import fuzs.puzzleslib.common.api.client.renderer.v1.RenderStateExtraData;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -31,9 +36,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
     static final ModelLayerFactory MODEL_LAYERS = ModelLayerFactory.from(HorseExpert.MOD_ID);
-    public static final ModelLayerLocation PLAYER_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player",
-            "monocle");
-    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_LOCATION = MODEL_LAYERS.registerModelLayer("player_baby",
+    public static final ModelLayerLocation PLAYER_MONOCLE_LAYER = MODEL_LAYERS.registerModelLayer("player", "monocle");
+    public static final ModelLayerLocation PLAYER_BABY_MONOCLE_LAYER = MODEL_LAYERS.registerModelLayer("player_baby",
             "monocle");
     public static final ContextKey<ItemStack> MONOCLE_ITEM_KEY = new ContextKey<>(HorseExpert.id("monocle_item"));
     private static final Identifier TEXTURE_LOCATION = HorseExpert.id("textures/entity/equipment/humanoid/monocle.png");
@@ -43,8 +47,22 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
 
     private MonocleLayer(RenderLayerParent<S, M> renderer, EntityRendererProvider.Context context) {
         super(renderer);
-        this.model = new HumanoidModel<>(context.bakeLayer(PLAYER_MONOCLE_LOCATION));
-        this.babyModel = new HumanoidModel<>(context.bakeLayer(PLAYER_BABY_MONOCLE_LOCATION));
+        this.model = new HumanoidModel<>(context.bakeLayer(PLAYER_MONOCLE_LAYER));
+        this.babyModel = new HumanoidModel<>(context.bakeLayer(PLAYER_BABY_MONOCLE_LAYER));
+    }
+
+    /**
+     * Similar to player armor, but with cube deformation from piglin armor to avoid z-fighting when worn at the same
+     * time as a helmet.
+     *
+     * @see LayerDefinitions#createRoots()
+     */
+    public static LayerDefinition createHeadLayer() {
+        return PlayerModel.createArmorMeshSet(LayerDefinitions.INNER_ARMOR_DEFORMATION, new CubeDeformation(1.02F))
+                .map((MeshDefinition meshDefinition) -> {
+                    return LayerDefinition.create(meshDefinition, 64, 32);
+                })
+                .head();
     }
 
     public static void onExtractEntityRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
