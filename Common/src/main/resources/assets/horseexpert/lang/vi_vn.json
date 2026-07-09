@@ -1,0 +1,14 @@
+{
+  "horse.tooltip.health": "Máu: %s",
+  "horse.tooltip.health.unit": "%s tim",
+  "horse.tooltip.jump_height": "Nhảy: %s",
+  "horse.tooltip.jump_height.unit": "%s khối",
+  "horse.tooltip.max": "Cao: %s",
+  "horse.tooltip.min": "Thấp: %s",
+  "horse.tooltip.speed": "Chạy: %s",
+  "horse.tooltip.speed.unit": "%s khối/giây",
+  "horse.tooltip.strength": "Chứa được: %s",
+  "horse.tooltip.strength.unit": "%s ô",
+  "item.horseexpert.monocle": "Kính độc nhãn",
+  "item.horseexpert.monocle.tooltip": "Đeo lên và nhìn vào thú cưỡi để xem toàn bộ chỉ số!"
+}
