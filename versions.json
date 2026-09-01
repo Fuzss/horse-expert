@@ -6,11 +6,17 @@
     "26.1.x": "maintained",
     "26.2.x": "primary"
   },
-  "properties": {
-    "distributions.curseforge.id": "666942",
-    "distributions.curseforge.slug": "horse-expert",
-    "distributions.github.slug": "horse-expert",
-    "distributions.modrinth.id": "24CSPS1E",
-    "distributions.modrinth.slug": "horse-expert"
+  "distributions": {
+    "curseforge": {
+      "id": "666942",
+      "slug": "horse-expert"
+    },
+    "github": {
+      "slug": "horse-expert"
+    },
+    "modrinth": {
+      "id": "24CSPS1E",
+      "slug": "horse-expert"
+    }
   }
 }
