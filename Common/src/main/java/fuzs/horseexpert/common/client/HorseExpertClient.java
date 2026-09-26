@@ -6,12 +6,14 @@ import fuzs.horseexpert.common.client.handler.AttributeOverlayHandler;
 import fuzs.horseexpert.common.client.init.ModEnumConstants;
 import fuzs.horseexpert.common.client.model.geom.ModModelLayers;
 import fuzs.horseexpert.common.client.renderer.entity.layers.MonocleLayer;
+import fuzs.horseexpert.common.client.renderer.rendertype.ModRenderTypes;
 import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.horseexpert.common.world.inventory.tooltip.HorseAttributeTooltip;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.common.api.client.core.v1.context.ClientTooltipComponentsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.GuiLayersContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.LayerDefinitionsContext;
+import fuzs.puzzleslib.common.api.client.core.v1.context.RenderPipelinesContext;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.ExtractEntityRenderStateCallback;
 import fuzs.puzzleslib.common.api.client.gui.v2.tooltip.ItemTooltipRegistry;
@@ -58,5 +60,11 @@ public class HorseExpertClient implements ClientModConstructor {
         context.registerGuiLayer(GuiLayersContext.HELD_ITEM_TOOLTIP,
                 HorseExpert.id("tooltip"),
                 AttributeOverlayHandler::extractRenderState);
+    }
+
+    @Override
+    public void onRegisterRenderPipelines(RenderPipelinesContext context) {
+        context.registerRenderPipeline(ModRenderTypes.ARMOR_TRANSLUCENT_PIPELINE);
+        context.registerRenderPipeline(ModRenderTypes.ARMOR_TRANSLUCENT_GLINT_PIPELINE);
     }
 }

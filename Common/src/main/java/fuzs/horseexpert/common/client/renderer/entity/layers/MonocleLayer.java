@@ -4,9 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.horseexpert.common.HorseExpert;
 import fuzs.horseexpert.common.client.init.ModEnumConstants;
 import fuzs.horseexpert.common.client.model.geom.ModModelLayers;
+import fuzs.horseexpert.common.client.renderer.rendertype.ModRenderTypes;
 import fuzs.horseexpert.common.init.ModRegistry;
 import fuzs.horseexpert.common.util.ItemEquipmentHelper;
-import fuzs.puzzleslib.common.api.client.renderer.v1.RenderStateExtraData;
+import fuzs.puzzleslib.common.api.client.renderer.v2.RenderStateExtraData;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.LayerDefinitions;
@@ -24,7 +25,7 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.component.DataComponents;
@@ -140,31 +141,18 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 this.equipmentRenderer.layerTextureLookup.apply(new EquipmentLayerRenderer.LayerTextureKey(
                                         layerType,
                                         layer));
+                RenderType renderType = renderFoil ? ModRenderTypes.armorTranslucentGlint(layerTexture) :
+                        ModRenderTypes.armorTranslucent(layerTexture);
                 submitNodeCollector.order(nextOrder++)
                         .submitModel(model,
                                 state,
                                 poseStack,
-                                RenderTypes.armorTranslucent(layerTexture),
+                                renderType,
                                 lightCoords,
                                 OverlayTexture.NO_OVERLAY,
                                 -1,
                                 null,
-                                outlineColor,
-                                null);
-                if (renderFoil) {
-                    submitNodeCollector.order(nextOrder++)
-                            .submitModel(model,
-                                    state,
-                                    poseStack,
-                                    RenderTypes.armorEntityGlint(),
-                                    lightCoords,
-                                    OverlayTexture.NO_OVERLAY,
-                                    -1,
-                                    null,
-                                    outlineColor,
-                                    null);
-                }
-
+                                outlineColor);
                 renderFoil = false;
             }
         }

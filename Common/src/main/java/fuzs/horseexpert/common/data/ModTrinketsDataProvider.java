@@ -3,7 +3,7 @@ package fuzs.horseexpert.common.data;
 import eu.pb4.trinkets.api.DefaultTrinketSlots;
 import eu.pb4.trinkets.api.datagen.TrinketsDataProvider;
 import fuzs.horseexpert.common.HorseExpert;
-import fuzs.puzzleslib.common.api.data.v2.core.DataProviderContext;
+import fuzs.puzzleslib.common.api.data.v3.core.DataProviderContext;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 

@@ -6,7 +6,7 @@ import fuzs.horseexpert.common.data.client.ModEquipmentProvider;
 import fuzs.horseexpert.common.data.client.ModLanguageProvider;
 import fuzs.horseexpert.common.data.client.ModModelProvider;
 import fuzs.puzzleslib.common.api.client.core.v1.ClientModConstructor;
-import fuzs.puzzleslib.neoforge.api.data.v2.core.DataProviderHelper;
+import fuzs.puzzleslib.neoforge.api.data.v3.core.DataProviderBuilder;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -16,9 +16,9 @@ public class HorseExpertNeoForgeClient {
 
     public HorseExpertNeoForgeClient(ModContainer modContainer) {
         ClientModConstructor.construct(HorseExpert.MOD_ID, HorseExpertClient::new);
-        DataProviderHelper.registerDataProviders(HorseExpert.MOD_ID,
-                ModEquipmentProvider::new,
-                ModLanguageProvider::new,
-                ModModelProvider::new);
+        DataProviderBuilder.of(HorseExpert.MOD_ID)
+                .addProvider(ModEquipmentProvider::new,
+                        ModLanguageProvider::new,
+                        ModModelProvider::new);
     }
 }
