@@ -5,9 +5,11 @@ import com.mojang.renderpearl.api.pipeline.ColorTargetState;
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import fuzs.horseexpert.common.HorseExpert;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.LayeringTransform;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.TextureTransform;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 
@@ -42,6 +44,20 @@ public final class ModRenderTypes {
                 .createRenderSetup();
         return RenderType.create(HorseExpert.id("armor_translucent").toString(), state);
     });
+    /**
+     * A standalone glint overlay without {@link RenderSetup.RenderSetupBuilder#withForcedSolidModelPhase()}, so it is
+     * routed to the translucent phase after the base pass; the vanilla render type forces the solid phase and its
+     * {@code EQUAL} depth test then fails.
+     *
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#TRIMMED_ARMOR_GLINT
+     */
+    private static final RenderType ARMOR_TRANSLUCENT_GLINT = RenderType.create(HorseExpert.id("armor_glint")
+                    .toString(),
+            RenderSetup.builder(RenderPipelines.GLINT)
+                    .withTexture("Sampler0", ItemFeatureRenderer.ENCHANTED_GLINT_ARMOR)
+                    .setTextureTransform(TextureTransform.ARMOR_ENTITY_GLINT_TEXTURING)
+                    .setLayeringTransform(LayeringTransform.VIEW_OFFSET_Z_LAYERING)
+                    .createRenderSetup());
 
     private ModRenderTypes() {
         // NO-OP
@@ -52,5 +68,12 @@ public final class ModRenderTypes {
      */
     public static RenderType armorTranslucent(Identifier texture) {
         return ARMOR_TRANSLUCENT.apply(texture);
+    }
+
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#trimmedArmorGlint()
+     */
+    public static RenderType armorTranslucentGlint() {
+        return ARMOR_TRANSLUCENT_GLINT;
     }
 }

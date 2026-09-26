@@ -26,7 +26,6 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.component.DataComponents;
@@ -127,6 +126,9 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
     }
 
     /**
+     * This is based on the vanilla implementation in Minecraft 26.2, since the current approach which renders the model
+     * in a single pass fails to handle transparency correctly.
+     *
      * @see EquipmentLayerRenderer#renderLayers(EquipmentClientInfo.LayerType, ResourceKey, Model, Object, ItemStack,
      *         PoseStack, SubmitNodeCollector, int, Identifier, int, int)
      */
@@ -158,13 +160,14 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                             .submitModel(model,
                                     state,
                                     poseStack,
-                                    RenderTypes.trimmedArmorGlint(),
+                                    ModRenderTypes.armorTranslucentGlint(),
                                     lightCoords,
                                     OverlayTexture.NO_OVERLAY,
                                     -1,
                                     null,
                                     outlineColor);
                 }
+
                 renderShaderGlint = false;
             }
         }
