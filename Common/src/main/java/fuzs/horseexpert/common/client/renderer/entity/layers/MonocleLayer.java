@@ -133,7 +133,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
         List<EquipmentClientInfo.Layer> layers = this.equipmentRenderer.equipmentAssets.get(equipmentAssetId)
                 .getLayers(layerType);
         if (!layers.isEmpty()) {
-            boolean renderFoil = itemStack.hasFoil();
+            boolean renderShaderGlint = itemStack.hasFoil();
             int nextOrder = order;
             for (EquipmentClientInfo.Layer layer : layers) {
                 Identifier layerTexture =
@@ -141,7 +141,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 this.equipmentRenderer.layerTextureLookup.apply(new EquipmentLayerRenderer.LayerTextureKey(
                                         layerType,
                                         layer));
-                RenderType renderType = renderFoil ? ModRenderTypes.armorTranslucentGlint(layerTexture) :
+                RenderType renderType = renderShaderGlint ? ModRenderTypes.armorTranslucentGlint(layerTexture) :
                         ModRenderTypes.armorTranslucent(layerTexture);
                 submitNodeCollector.order(nextOrder++)
                         .submitModel(model,
@@ -153,7 +153,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 -1,
                                 null,
                                 outlineColor);
-                renderFoil = false;
+                renderShaderGlint = false;
             }
         }
     }

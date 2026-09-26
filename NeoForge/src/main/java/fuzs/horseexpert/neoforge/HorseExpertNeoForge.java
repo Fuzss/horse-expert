@@ -15,11 +15,11 @@ public class HorseExpertNeoForge {
 
     public HorseExpertNeoForge() {
         ModConstructor.construct(HorseExpert.MOD_ID, HorseExpert::new);
-        DataProviderBuilder builder = DataProviderBuilder.of(HorseExpert.MOD_ID)
+        DataProviderBuilder.of(HorseExpert.MOD_ID)
                 .addProvider(ModEntityTypeTagsProvider::new, ModItemTagsProvider::new)
                 .addRecipeProvider(ModRecipeProvider::new);
         if (ModLoaderEnvironment.INSTANCE.isModLoaded("trinkets_updated")) {
-            builder.addProvider(ModTrinketsDataProvider::new);
+            DataProviderBuilder.of(HorseExpert.MOD_ID, ModTrinketsDataProvider::new);
         }
     }
 }

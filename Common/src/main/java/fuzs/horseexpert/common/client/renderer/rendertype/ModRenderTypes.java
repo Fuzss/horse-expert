@@ -44,6 +44,9 @@ public final class ModRenderTypes {
             .withCull(false)
             .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
             .build();
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#ARMOR_CUTOUT_NO_CULL
+     */
     private static final Function<Identifier, RenderType> ARMOR_TRANSLUCENT = Util.memoize(texture -> {
         RenderSetup state = RenderSetup.builder(ARMOR_TRANSLUCENT_PIPELINE)
                 .withTexture("Sampler0", texture)
@@ -56,6 +59,9 @@ public final class ModRenderTypes {
                 .createRenderSetup();
         return RenderType.create(HorseExpert.id("armor_translucent").toString(), state);
     });
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#ARMOR_CUTOUT_NO_CULL_GLINT
+     */
     private static final Function<Identifier, RenderType> ARMOR_TRANSLUCENT_GLINT = Util.memoize(texture -> {
         RenderSetup state = RenderSetup.builder(ARMOR_TRANSLUCENT_GLINT_PIPELINE)
                 .withTexture("Sampler0", texture)
@@ -75,10 +81,16 @@ public final class ModRenderTypes {
         // NO-OP
     }
 
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#armorCutoutNoCull(Identifier)
+     */
     public static RenderType armorTranslucent(Identifier texture) {
         return ARMOR_TRANSLUCENT.apply(texture);
     }
 
+    /**
+     * @see net.minecraft.client.renderer.rendertype.RenderTypes#armorCutoutNoCullGlint(Identifier)
+     */
     public static RenderType armorTranslucentGlint(Identifier texture) {
         return ARMOR_TRANSLUCENT_GLINT.apply(texture);
     }
