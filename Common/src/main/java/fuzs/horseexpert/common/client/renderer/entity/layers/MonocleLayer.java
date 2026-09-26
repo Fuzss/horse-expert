@@ -26,6 +26,7 @@ import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.component.DataComponents;
@@ -141,8 +142,7 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 this.equipmentRenderer.layerTextureLookup.apply(new EquipmentLayerRenderer.LayerTextureKey(
                                         layerType,
                                         layer));
-                RenderType renderType = renderShaderGlint ? ModRenderTypes.armorTranslucentGlint(layerTexture) :
-                        ModRenderTypes.armorTranslucent(layerTexture);
+                RenderType renderType = ModRenderTypes.armorTranslucent(layerTexture);
                 submitNodeCollector.order(nextOrder++)
                         .submitModel(model,
                                 state,
@@ -153,6 +153,18 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 -1,
                                 null,
                                 outlineColor);
+                if (renderShaderGlint) {
+                    submitNodeCollector.order(nextOrder++)
+                            .submitModel(model,
+                                    state,
+                                    poseStack,
+                                    RenderTypes.trimmedArmorGlint(),
+                                    lightCoords,
+                                    OverlayTexture.NO_OVERLAY,
+                                    -1,
+                                    null,
+                                    outlineColor);
+                }
                 renderShaderGlint = false;
             }
         }
