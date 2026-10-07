@@ -144,7 +144,8 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 this.equipmentRenderer.layerTextureLookup.apply(new EquipmentLayerRenderer.LayerTextureKey(
                                         layerType,
                                         layer));
-                RenderType renderType = ModRenderTypes.armorTranslucent(layerTexture);
+                RenderType renderType = renderShaderGlint ? ModRenderTypes.armorTranslucentGlint(layerTexture) :
+                        ModRenderTypes.armorTranslucent(layerTexture);
                 submitNodeCollector.order(nextOrder++)
                         .submitModel(model,
                                 state,
@@ -155,19 +156,6 @@ public class MonocleLayer<S extends HumanoidRenderState, M extends HumanoidModel
                                 -1,
                                 null,
                                 outlineColor);
-                if (renderShaderGlint) {
-                    submitNodeCollector.order(nextOrder++)
-                            .submitModel(model,
-                                    state,
-                                    poseStack,
-                                    ModRenderTypes.armorTranslucentGlint(),
-                                    lightCoords,
-                                    OverlayTexture.NO_OVERLAY,
-                                    -1,
-                                    null,
-                                    outlineColor);
-                }
-
                 renderShaderGlint = false;
             }
         }

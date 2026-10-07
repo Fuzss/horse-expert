@@ -64,6 +64,9 @@ public class HorseExpertClient implements ClientModConstructor {
 
     @Override
     public void onRegisterRenderPipelines(RenderPipelinesContext context) {
-        context.registerRenderPipeline(ModRenderTypes.ARMOR_TRANSLUCENT_PIPELINE);
+        context.registerPipeline(ModRenderTypes.ARMOR_TRANSLUCENT_PIPELINE);
+        context.registerOitPipelineSet(ModRenderTypes.ARMOR_TRANSLUCENT_OIT_PIPELINES);
+        context.registerPipeline(ModRenderTypes.ARMOR_TRANSLUCENT_GLINT_PIPELINE);
+        context.registerOitPipelineSet(ModRenderTypes.ARMOR_TRANSLUCENT_GLINT_OIT_PIPELINES);
     }
 }
